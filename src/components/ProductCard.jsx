@@ -4,22 +4,50 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
-const ProductCard = ({ product, onAddToCart }) => {
+const ProductCard = ({ product, onAddToCart, onProductClick }) => {
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <FontAwesomeIcon
+          key={i}
+          icon={faStar}
+          className={i < rating ? 'text-yellow-400' : 'text-gray-300'}
+        />
+      );
+    }
+    return stars;
+  };
+
   return (
-    <div className="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
-      <div className="relative">
-        <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
-        <div className="absolute top-2 right-2 bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded">
-          {product.rating} <FontAwesomeIcon icon={faStar} className="ml-1" />
-        </div>
+    <div
+      className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-xl product-card cursor-pointer"
+      onClick={() => onProductClick(product.id)} // Add this line
+    >
+      <div className="relative overflow-hidden">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-48 object-cover transform transition-transform duration-300 hover:scale-105"
+        />
       </div>
       <div className="p-4">
-        <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
-        <p className="text-gray-600 text-sm mb-3">{product.description}</p>
+        <h3 className="text-lg font-semibold text-gray-800 truncate mb-1">{product.name}</h3>
+        <div className="flex items-center mb-2">
+          {renderStars(product.rating)}
+          <span className="ml-2 text-sm text-gray-500">({product.rating}.0)</span>
+        </div>
         <div className="flex justify-between items-center">
-          <span className="font-bold text-indigo-600">${product.price.toFixed(2)}</span>
-          <button className="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm hover:bg-indigo-700 transition" onClick={() => onAddToCart(product.id)}>
-            <FontAwesomeIcon icon={faCartPlus} className="mr-1" /> Add to Cart
+          <span className="text-xl font-bold text-indigo-600">${product.price.toFixed(2)}</span>
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // Prevents the card click event from firing
+              onAddToCart(product.id);
+            }}
+            className="bg-indigo-100 text-indigo-600 p-2 rounded-full hover:bg-indigo-200 transition-colors"
+            aria-label="Add to cart"
+          >
+            <FontAwesomeIcon icon={faCartPlus} />
           </button>
         </div>
       </div>

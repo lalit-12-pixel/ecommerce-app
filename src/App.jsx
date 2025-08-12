@@ -9,15 +9,16 @@ import Cart from './components/Cart';
 import CheckoutModal from './components/CheckoutModal';
 import BackToTopButton from './components/BackToTopButton';
 import CategorySidebar from './components/CategorySidebar';
+import ProductViewPage from './components/ProductViewPage'; // Import the new component
 
-// Sample product data - This will be replaced by a backend call
 const SAMPLE_PRODUCTS = [
+  // ... (Your existing product data)
   {
     id: 1,
     name: "Wireless Headphones",
     price: 99.99,
     category: "electronics",
-    image: "https://via.placeholder.com/300x200?text=Wireless+Headphones",
+    image: "https://via.placeholder.com/600x400?text=Wireless+Headphones",
     rating: 4,
     description: "High-quality wireless headphones with noise cancellation and 30-hour battery life."
   },
@@ -26,7 +27,7 @@ const SAMPLE_PRODUCTS = [
     name: "Smart Watch",
     price: 199.99,
     category: "electronics",
-    image: "https://via.placeholder.com/300x200?text=Smart+Watch",
+    image: "https://via.placeholder.com/600x400?text=Smart+Watch",
     rating: 5,
     description: "Track your fitness, receive notifications, and more with this stylish smartwatch."
   },
@@ -35,7 +36,7 @@ const SAMPLE_PRODUCTS = [
     name: "Cotton T-Shirt",
     price: 24.99,
     category: "fashion",
-    image: "https://via.placeholder.com/300x200?text=Cotton+T-Shirt",
+    image: "https://via.placeholder.com/600x400?text=Cotton+T-Shirt",
     rating: 4,
     description: "Comfortable 100% cotton t-shirt available in multiple colors."
   },
@@ -44,7 +45,7 @@ const SAMPLE_PRODUCTS = [
     name: "Denim Jeans",
     price: 59.99,
     category: "fashion",
-    image: "https://via.placeholder.com/300x200?text=Denim+Jeans",
+    image: "https://via.placeholder.com/600x400?text=Denim+Jeans",
     rating: 4,
     description: "Classic fit denim jeans with stretch for all-day comfort."
   },
@@ -53,7 +54,7 @@ const SAMPLE_PRODUCTS = [
     name: "Coffee Maker",
     price: 89.99,
     category: "home",
-    image: "https://via.placeholder.com/300x200?text=Coffee+Maker",
+    image: "https://via.placeholder.com/600x400?text=Coffee+Maker",
     rating: 5,
     description: "Programmable coffee maker with 12-cup capacity and auto shut-off."
   },
@@ -62,7 +63,7 @@ const SAMPLE_PRODUCTS = [
     name: "Air Fryer",
     price: 129.99,
     category: "home",
-    image: "https://via.placeholder.com/300x200?text=Air+Fryer",
+    image: "https://via.placeholder.com/600x400?text=Air+Fryer",
     rating: 4,
     description: "Healthy cooking with little to no oil. 5.8-quart capacity."
   },
@@ -71,7 +72,7 @@ const SAMPLE_PRODUCTS = [
     name: "Bluetooth Speaker",
     price: 79.99,
     category: "electronics",
-    image: "https://via.placeholder.com/300x200?text=Bluetooth+Speaker",
+    image: "https://via.placeholder.com/600x400?text=Bluetooth+Speaker",
     rating: 4,
     description: "Portable waterproof speaker with 20-hour battery life."
   },
@@ -80,11 +81,12 @@ const SAMPLE_PRODUCTS = [
     name: "Running Shoes",
     price: 89.99,
     category: "fashion",
-    image: "https://via.placeholder.com/300x200?text=Running+Shoes",
+    image: "https://via.placeholder.com/600x400?text=Running+Shoes",
     rating: 5,
     description: "Lightweight running shoes with cushioned soles for maximum comfort."
   }
 ];
+
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -95,6 +97,7 @@ const App = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null); // New state for selected product
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -129,6 +132,12 @@ const App = () => {
 
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
+  };
+  
+  // New handler to open the product view page
+  const handleProductClick = (productId) => {
+    const product = products.find(p => p.id === productId);
+    setSelectedProduct(product);
   };
 
   const addToCart = (productId) => {
@@ -212,6 +221,7 @@ const App = () => {
         addToCart={addToCart}
         filteredCategory={filteredCategory}
         setFilteredCategory={setFilteredCategory}
+        onProductClick={handleProductClick} // Pass the new handler
       />
       <Footer />
       <Cart
@@ -228,6 +238,15 @@ const App = () => {
         onClose={() => setIsCheckoutModalOpen(false)}
       />
       <BackToTopButton isScrolled={isScrolled} />
+      
+      {/* Conditionally render the product view page */}
+      {selectedProduct && (
+        <ProductViewPage
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={addToCart}
+        />
+      )}
     </div>
   );
 };
