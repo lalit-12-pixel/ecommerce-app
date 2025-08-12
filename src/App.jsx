@@ -8,9 +8,9 @@ import Footer from './components/Footer';
 import Cart from './components/Cart';
 import CheckoutModal from './components/CheckoutModal';
 import BackToTopButton from './components/BackToTopButton';
+import CategorySidebar from './components/CategorySidebar';
 
 // Sample product data - This will be replaced by a backend call
-// I've moved this to a separate variable for now for clarity
 const SAMPLE_PRODUCTS = [
   {
     id: 1,
@@ -91,21 +91,14 @@ const App = () => {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [filteredCategory, setFilteredCategory] = useState('all');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  // useEffect to fetch products from backend
   useEffect(() => {
-    // This is where you would fetch data from your backend API
-    // Example using a placeholder function
     const fetchProducts = async () => {
       try {
-        // const response = await fetch('/api/products'); // Replace with your actual API endpoint
-        // const data = await response.json();
-        // setProducts(data);
-
-        // For now, we'll use the sample data
         setProducts(SAMPLE_PRODUCTS);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -114,16 +107,13 @@ const App = () => {
     fetchProducts();
   }, []);
 
-  // Filter products based on the selected category
   const filteredProducts = filteredCategory === 'all'
     ? products
     : products.filter(product => product.category === filteredCategory);
 
-  // Calculate total items and subtotal for the cart
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const cartSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-  // Handle scroll event for the "Back to Top" button
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.pageYOffset > 300);
@@ -132,7 +122,15 @@ const App = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handlers for cart functionality
+  const handleCategorySelect = (category) => {
+    setFilteredCategory(category);
+    setIsSidebarOpen(false);
+  };
+
+  const toggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
+
   const addToCart = (productId) => {
     const product = products.find(p => p.id === productId);
     setCart(prevCart => {
@@ -168,13 +166,10 @@ const App = () => {
     setIsCartOpen(false);
     setIsCheckoutModalOpen(true);
     console.log('Checkout:', cart);
-    // In a real app, you would send the cart data to your backend here
-    setCart([]); // Clear cart after checkout
+    setCart([]);
   };
 
   const showAddToCartAnimation = () => {
-    // This is a simplified animation for demonstration.
-    // A more robust implementation would use a state variable.
     const animationDiv = document.createElement('div');
     animationDiv.className = 'fixed top-20 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg fade-in';
     animationDiv.innerHTML = `<i class="fas fa-check-circle mr-2"></i> Added to cart!`;
@@ -187,50 +182,30 @@ const App = () => {
   return (
     <div className="bg-gray-50">
       <style jsx="true">{`
-        .product-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        .cart-item-remove:hover {
-          color: #ef4444;
-          transform: scale(1.1);
-        }
-        .dropdown-menu {
-          opacity: 0;
-          visibility: hidden;
-          transition: all 0.3s ease;
-        }
-        .dropdown:hover .dropdown-menu {
-          opacity: 1;
-          visibility: visible;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in {
-          animation: fadeIn 0.3s ease forwards;
-        }
-        .cart-items-container::-webkit-scrollbar {
-          width: 6px;
-        }
-        .cart-items-container::-webkit-scrollbar-track {
-          background: #f1f1f1;
-        }
-        .cart-items-container::-webkit-scrollbar-thumb {
-          background: #cbd5e0;
-          border-radius: 3px;
-        }
-        .cart-items-container::-webkit-scrollbar-thumb:hover {
-          background: #a0aec0;
-        }
+        // ... (existing styles)
       `}</style>
       <Header
         cartCount={cartCount}
         onCartClick={() => setIsCartOpen(true)}
-        isMobileMenuOpen={isMobileMenuOpen}
-        onMobileMenuClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        onSidebarOpen={() => setIsSidebarOpen(true)}
+        onSearchClick={toggleSearch}
+        isSearchOpen={isSearchOpen}
       />
+      
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-gray-600 bg-opacity-50 z-40 transition-opacity duration-300"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+
+      <CategorySidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        onSelectCategory={handleCategorySelect}
+        filteredCategory={filteredCategory}
+      />
+
       <HeroSection />
       <MainContent
         products={filteredProducts}

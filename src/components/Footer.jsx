@@ -11,8 +11,8 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">ShopEase</h3>
-            <p className="mb-4">Your one-stop shop for all your needs. Quality products at affordable prices.</p>
+            <h3 className="text-xl font-bold mb-4">Innovative Hub</h3>
+            <p className="mb-4">Your gateway to top-quality electronics, robotics courses, and DIY learning at unbeatable prices.</p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-300 hover:text-white"><FontAwesomeIcon icon={faFacebookF} /></a>
               <a href="#" className="text-gray-300 hover:text-white"><FontAwesomeIcon icon={faTwitter} /></a>
@@ -52,7 +52,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2023 ShopEase. All rights reserved.</p>
+          <p>&copy; 2023 Innovative Hub. All rights reserved.</p>
         </div>
       </div>
     </footer>

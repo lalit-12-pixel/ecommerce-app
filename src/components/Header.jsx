@@ -2,74 +2,115 @@
 
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBag, faSearch, faChevronDown, faShoppingCart, faUser, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faBars, faHome, faTags, faPhone, faUser, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const Header = ({ cartCount, onCartClick, isMobileMenuOpen, onMobileMenuClick }) => {
+const Header = ({ cartCount, onCartClick, onSidebarOpen, onSearchClick, isSearchOpen }) => {
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo */}
-        <div className="flex items-center">
-          <a href="#" className="text-2xl font-bold text-indigo-600 flex items-center">
-            <FontAwesomeIcon icon={faShoppingBag} className="mr-2" />
-            Innovative Hub
-          </a>
-        </div>
-        {/* Search Bar */}
-        <div className="hidden md:flex flex-1 mx-8">
-          <div className="relative w-full max-w-xl">
-            <input type="text" placeholder="Search for products..."
-              className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" />
-            <button className="absolute right-0 top-0 h-full px-4 text-gray-600 hover:text-indigo-600">
-              <FontAwesomeIcon icon={faSearch} />
+    <header className="bg-white shadow-md sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Mobile: Hamburger, Logo, and Search Toggle */}
+        <div className={`md:hidden flex-grow flex items-center justify-between ${isSearchOpen ? 'hidden' : 'flex'}`}>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={onSidebarOpen}
+              className="text-gray-600 hover:text-indigo-600 focus:outline-none transition-colors duration-300"
+            >
+              <FontAwesomeIcon icon={faBars} className="text-2xl" />
+            </button>
+            <a href="#" className="text-2xl font-bold text-indigo-600">Innovative Hub</a>
+          </div>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={onSearchClick}
+              className="text-gray-600 hover:text-indigo-600 focus:outline-none transition-colors duration-300"
+            >
+              <FontAwesomeIcon icon={faSearch} className="text-2xl" />
+            </button>
+            <button onClick={onCartClick} className="relative text-gray-600 hover:text-indigo-600 focus:outline-none transition-colors duration-300">
+              <FontAwesomeIcon icon={faShoppingCart} className="text-2xl" />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </button>
           </div>
         </div>
-        {/* Navigation Links */}
-        <div className="hidden md:flex items-center space-x-6">
-          <a href="#" className="text-gray-700 hover:text-indigo-600 transition">Home</a>
-          <div className="dropdown relative">
-            <button className="text-gray-700 hover:text-indigo-600 transition flex items-center">
-              Categories <FontAwesomeIcon icon={faChevronDown} className="ml-1 text-xs" />
+
+        {/* Mobile Search Bar Section (visible when isSearchOpen is true) */}
+        {isSearchOpen && (
+          <div className="md:hidden flex-grow flex items-center space-x-2">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="flex-grow pl-4 pr-10 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <button onClick={onSearchClick} className="text-gray-600 hover:text-indigo-600 focus:outline-none">
+              <FontAwesomeIcon icon={faTimes} className="text-2xl" />
             </button>
-            <div className="dropdown-menu absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-              <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50">Electronics</a>
-              <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50">Fashion</a>
-              <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50">Home & Garden</a>
-              <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-indigo-50">Sports</a>
+          </div>
+        )}
+
+        {/* Desktop Header */}
+        <div className="hidden md:flex items-center w-full">
+          {/* Left Section: Hamburger and Logo */}
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={onSidebarOpen}
+              className="text-gray-600 hover:text-indigo-600 focus:outline-none transition-colors duration-300"
+            >
+              <FontAwesomeIcon icon={faBars} className="text-2xl" />
+            </button>
+            <a href="#" className="text-2xl font-bold text-indigo-600">Innovative Hub</a>
+          </div>
+
+          {/* Middle Section: Search Bar */}
+          <div className="flex-grow max-w-lg relative mx-8">
+            <input
+              type="text"
+              placeholder="Search for products..."
+              className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+            />
+            <FontAwesomeIcon
+              icon={faSearch}
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            />
+          </div>
+
+          {/* Right Section: Navigation Links and Icons */}
+          <div className="flex items-center space-x-6 ml-auto">
+            <nav className="flex items-center space-x-6">
+              <a href="#" className="text-gray-600 hover:text-indigo-600 transition-colors duration-300 flex items-center space-x-2">
+                <FontAwesomeIcon icon={faHome} />
+                <span className="hidden lg:inline">Home</span>
+              </a>
+              <a href="#" className="text-gray-600 hover:text-indigo-600 transition-colors duration-300 flex items-center space-x-2">
+                <FontAwesomeIcon icon={faTags} />
+                <span className="hidden lg:inline">Deals</span>
+              </a>
+              <a href="#" className="text-gray-600 hover:text-indigo-600 transition-colors duration-300 flex items-center space-x-2">
+                <FontAwesomeIcon icon={faPhone} />
+                <span className="hidden lg:inline">Contact</span>
+              </a>
+            </nav>
+            <div className="flex items-center space-x-4">
+              <a href="#" className="text-gray-600 hover:text-indigo-600 transition-colors duration-300 flex items-center space-x-2">
+                <FontAwesomeIcon icon={faUser} />
+                <span className="hidden lg:inline">Account</span>
+              </a>
+              <button onClick={onCartClick} className="relative text-gray-600 hover:text-indigo-600 focus:outline-none transition-colors duration-300">
+                <FontAwesomeIcon icon={faShoppingCart} className="text-2xl" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
             </div>
           </div>
-          <a href="#" className="text-gray-700 hover:text-indigo-600 transition">Deals</a>
-          <a href="#" className="text-gray-700 hover:text-indigo-600 transition">Contact</a>
-        </div>
-        {/* User Actions */}
-        <div className="flex items-center space-x-4">
-          <button className="text-gray-700 hover:text-indigo-600 transition relative" onClick={onCartClick}>
-            <FontAwesomeIcon icon={faShoppingCart} className="text-xl" />
-            <span className={`absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center ${cartCount === 0 ? 'hidden' : ''}`}>
-              {cartCount}
-            </span>
-          </button>
-          <button className="text-gray-700 hover:text-indigo-600 transition">
-            <FontAwesomeIcon icon={faUser} className="text-xl" />
-          </button>
-          <button className="md:hidden text-gray-700 hover:text-indigo-600 transition" onClick={onMobileMenuClick}>
-            <FontAwesomeIcon icon={faBars} className="text-xl" />
-          </button>
         </div>
       </div>
-      {/* Mobile Menu */}
-      <div className={`md:hidden ${isMobileMenuOpen ? '' : 'hidden'} bg-white py-2 px-4 shadow-md`}>
-        <div className="mb-3">
-          <input type="text" placeholder="Search for products..."
-            className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" />
-        </div>
-        <a href="#" className="block py-2 text-gray-700 hover:text-indigo-600">Home</a>
-        <a href="#" className="block py-2 text-gray-700 hover:text-indigo-600">Categories</a>
-        <a href="#" className="block py-2 text-gray-700 hover:text-indigo-600">Deals</a>
-        <a href="#" className="block py-2 text-gray-700 hover:text-indigo-600">Contact</a>
-      </div>
-    </nav>
+    </header>
   );
 };
 
