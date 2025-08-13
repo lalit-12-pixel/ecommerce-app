@@ -1,13 +1,9 @@
-// src/components/MainContent.jsx
-
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLaptop, faTshirt, faHome, faRunning, faStar } from '@fortawesome/free-solid-svg-icons';
 import ProductCard from './ProductCard';
 import SpecialOffer from './SpecialOffer';
 import Testimonials from './Testimonials';
 
-const MainContent = ({ products, addToCart, filteredCategory, setFilteredCategory, onProductClick }) => {
+const MainContent = ({ products, addToCart, filteredCategory, setFilteredCategory, onProductClick, addToWishlist }) => {
   return (
     <main className="container mx-auto px-4 py-8">
       {/* Featured Products */}
@@ -49,7 +45,8 @@ const MainContent = ({ products, addToCart, filteredCategory, setFilteredCategor
                 key={product.id}
                 product={product}
                 onAddToCart={addToCart}
-                onProductClick={onProductClick} // Pass the handler here
+                onProductClick={onProductClick}
+                onAddToWishlist={addToWishlist}
               />
             ))
           ) : (

@@ -1,5 +1,3 @@
-// src/App.jsx
-
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
@@ -9,10 +7,10 @@ import Cart from './components/Cart';
 import CheckoutModal from './components/CheckoutModal';
 import BackToTopButton from './components/BackToTopButton';
 import CategorySidebar from './components/CategorySidebar';
-import ProductViewPage from './components/ProductViewPage'; // Import the new component
+import ProductViewPage from './components/ProductViewPage';
+import Wishlist from './components/Wishlist';
 
 const SAMPLE_PRODUCTS = [
-  // ... (Your existing product data)
   {
     id: 1,
     name: "Wireless Headphones",
@@ -87,17 +85,18 @@ const SAMPLE_PRODUCTS = [
   }
 ];
 
-
 const App = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const [wishlist, setWishlist] = useState([]); // New state for wishlist
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false); // New state for wishlist modal
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
   const [filteredCategory, setFilteredCategory] = useState('all');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null); // New state for selected product
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -116,6 +115,7 @@ const App = () => {
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const cartSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const wishlistCount = wishlist.length;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -134,10 +134,11 @@ const App = () => {
     setIsSearchOpen(!isSearchOpen);
   };
   
-  // New handler to open the product view page
   const handleProductClick = (productId) => {
     const product = products.find(p => p.id === productId);
     setSelectedProduct(product);
+    setIsCartOpen(false); // Close cart if open
+    setIsWishlistOpen(false); // Close wishlist if open
   };
 
   const addToCart = (productId) => {
@@ -188,10 +189,40 @@ const App = () => {
     }, 2000);
   };
 
+  // New wishlist handlers
+  const addToWishlist = (productId) => {
+    const product = products.find(p => p.id === productId);
+    setWishlist(prevWishlist => {
+      if (prevWishlist.find(item => item.id === productId)) {
+        return prevWishlist;
+      }
+      return [...prevWishlist, product];
+    });
+  };
+
+  const removeFromWishlist = (productId) => {
+    setWishlist(prevWishlist => prevWishlist.filter(item => item.id !== productId));
+  };
+
+  const addToCartFromWishlist = (productId) => {
+    addToCart(productId);
+    removeFromWishlist(productId);
+  };
+
   return (
     <div className="bg-gray-50">
       <style jsx="true">{`
-        // ... (existing styles)
+        .fade-in {
+          animation: fadeIn 0.5s, fadeOut 0.5s 1.5s forwards;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+          from { opacity: 1; transform: translateY(0); }
+          to { opacity: 0; transform: translateY(-20px); }
+        }
       `}</style>
       <Header
         cartCount={cartCount}
@@ -199,6 +230,8 @@ const App = () => {
         onSidebarOpen={() => setIsSidebarOpen(true)}
         onSearchClick={toggleSearch}
         isSearchOpen={isSearchOpen}
+        wishlistCount={wishlistCount}
+        onWishlistClick={() => setIsWishlistOpen(true)}
       />
       
       {isSidebarOpen && (
@@ -221,7 +254,8 @@ const App = () => {
         addToCart={addToCart}
         filteredCategory={filteredCategory}
         setFilteredCategory={setFilteredCategory}
-        onProductClick={handleProductClick} // Pass the new handler
+        onProductClick={handleProductClick}
+        addToWishlist={addToWishlist}
       />
       <Footer />
       <Cart
@@ -232,6 +266,7 @@ const App = () => {
         onUpdateQuantity={updateQuantity}
         onCheckout={handleCheckout}
         cartSubtotal={cartSubtotal}
+        onProductClick={handleProductClick}
       />
       <CheckoutModal
         isCheckoutModalOpen={isCheckoutModalOpen}
@@ -239,12 +274,21 @@ const App = () => {
       />
       <BackToTopButton isScrolled={isScrolled} />
       
-      {/* Conditionally render the product view page */}
+      <Wishlist
+        wishlist={wishlist}
+        isWishlistOpen={isWishlistOpen}
+        onClose={() => setIsWishlistOpen(false)}
+        onRemoveFromWishlist={removeFromWishlist}
+        onAddToCartFromWishlist={addToCartFromWishlist}
+        onProductClick={handleProductClick}
+      />
+      
       {selectedProduct && (
         <ProductViewPage
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
           onAddToCart={addToCart}
+          addToWishlist={addToWishlist}
         />
       )}
     </div>

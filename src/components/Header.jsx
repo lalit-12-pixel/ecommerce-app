@@ -1,10 +1,8 @@
-// src/components/Header.jsx
-
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faBars, faHome, faTags, faPhone, faUser, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faBars, faHome, faTags, faPhone, faUser, faSearch, faTimes, faHeart } from '@fortawesome/free-solid-svg-icons';
 
-const Header = ({ cartCount, onCartClick, onSidebarOpen, onSearchClick, isSearchOpen }) => {
+const Header = ({ cartCount, onCartClick, onSidebarOpen, onSearchClick, isSearchOpen, wishlistCount, onWishlistClick }) => {
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -25,6 +23,14 @@ const Header = ({ cartCount, onCartClick, onSidebarOpen, onSearchClick, isSearch
               className="text-gray-600 hover:text-indigo-600 focus:outline-none transition-colors duration-300"
             >
               <FontAwesomeIcon icon={faSearch} className="text-2xl" />
+            </button>
+            <button onClick={onWishlistClick} className="relative text-gray-600 hover:text-red-500 focus:outline-none transition-colors duration-300">
+              <FontAwesomeIcon icon={faHeart} className="text-2xl" />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
             </button>
             <button onClick={onCartClick} className="relative text-gray-600 hover:text-indigo-600 focus:outline-none transition-colors duration-300">
               <FontAwesomeIcon icon={faShoppingCart} className="text-2xl" />
@@ -98,6 +104,14 @@ const Header = ({ cartCount, onCartClick, onSidebarOpen, onSearchClick, isSearch
                 <FontAwesomeIcon icon={faUser} />
                 <span className="hidden lg:inline">Account</span>
               </a>
+              <button onClick={onWishlistClick} className="relative text-gray-600 hover:text-red-500 focus:outline-none transition-colors duration-300">
+                <FontAwesomeIcon icon={faHeart} className="text-2xl" />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {wishlistCount}
+                  </span>
+                )}
+              </button>
               <button onClick={onCartClick} className="relative text-gray-600 hover:text-indigo-600 focus:outline-none transition-colors duration-300">
                 <FontAwesomeIcon icon={faShoppingCart} className="text-2xl" />
                 {cartCount > 0 && (
