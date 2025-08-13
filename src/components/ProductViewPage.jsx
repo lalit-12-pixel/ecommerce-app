@@ -1,10 +1,8 @@
-// src/components/ProductViewPage.jsx
-
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faStarHalfAlt, faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faStarHalfAlt, faCartPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
 
-const ProductViewPage = ({ product, onClose, onAddToCart }) => {
+const ProductViewPage = ({ product, onClose, onAddToCart, addToWishlist }) => {
     const renderStars = (rating) => {
         const stars = [];
         for (let i = 1; i <= 5; i++) {
@@ -64,13 +62,19 @@ const ProductViewPage = ({ product, onClose, onAddToCart }) => {
                                 <FontAwesomeIcon icon={faCartPlus} />
                                 <span>Add to Cart</span>
                             </button>
+                            <button
+                                onClick={() => addToWishlist(product.id)}
+                                className="flex-1 bg-red-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-red-700 transition-colors flex items-center justify-center space-x-2"
+                            >
+                                <FontAwesomeIcon icon={faHeart} />
+                                <span>Add to Wishlist</span>
+                            </button>
                         </div>
 
                         {/* Reviews Section */}
                         <div className="mt-8 pt-4 border-t border-gray-200">
                             <h2 className="text-2xl font-bold text-gray-800 mb-4">Customer Reviews</h2>
                             <p className="text-gray-500">There are no reviews for this product yet.</p>
-                            {/* You could map through a reviews array here if you had one */}
                         </div>
                     </div>
                 </div>

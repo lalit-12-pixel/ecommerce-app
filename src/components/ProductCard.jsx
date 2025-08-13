@@ -1,10 +1,8 @@
-// src/components/ProductCard.jsx
-
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faCartPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
 
-const ProductCard = ({ product, onAddToCart, onProductClick }) => {
+const ProductCard = ({ product, onAddToCart, onProductClick, onAddToWishlist }) => {
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
@@ -22,7 +20,7 @@ const ProductCard = ({ product, onAddToCart, onProductClick }) => {
   return (
     <div
       className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-xl product-card cursor-pointer"
-      onClick={() => onProductClick(product.id)} // Add this line
+      onClick={() => onProductClick(product.id)}
     >
       <div className="relative overflow-hidden">
         <img
@@ -39,16 +37,28 @@ const ProductCard = ({ product, onAddToCart, onProductClick }) => {
         </div>
         <div className="flex justify-between items-center">
           <span className="text-xl font-bold text-indigo-600">${product.price.toFixed(2)}</span>
-          <button
-            onClick={(e) => {
-              e.stopPropagation(); // Prevents the card click event from firing
-              onAddToCart(product.id);
-            }}
-            className="bg-indigo-100 text-indigo-600 p-2 rounded-full hover:bg-indigo-200 transition-colors"
-            aria-label="Add to cart"
-          >
-            <FontAwesomeIcon icon={faCartPlus} />
-          </button>
+          <div className="flex space-x-2">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onAddToWishlist(product.id);
+              }}
+              className="bg-red-100 text-red-600 p-2 rounded-full hover:bg-red-200 transition-colors"
+              aria-label="Add to wishlist"
+            >
+              <FontAwesomeIcon icon={faHeart} />
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onAddToCart(product.id);
+              }}
+              className="bg-indigo-100 text-indigo-600 p-2 rounded-full hover:bg-indigo-200 transition-colors"
+              aria-label="Add to cart"
+            >
+              <FontAwesomeIcon icon={faCartPlus} />
+            </button>
+          </div>
         </div>
       </div>
     </div>
