@@ -3,12 +3,20 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBolt, faBookOpen, faCogs, faComments } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom";
 
-const features = [
+
+
+// The LandingPage component now accepts a prop to handle navigation
+const LandingPage = ({ onGoToShop }) => {
+    
+    const navigate = useNavigate();
+    const features = [
   {
     icon: faBolt,
     title: 'E-Shop for Components',
     description: 'Explore a vast catalog of high-quality electrical and electronic components for your projects.',
+    onClick: () => navigate("/home")
   },
   {
     icon: faBookOpen,
@@ -26,9 +34,7 @@ const features = [
     description: 'Connect with a community of innovators. Share your projects, get feedback, and find inspiration.'
   }
 ];
-
-// The LandingPage component now accepts a prop to handle navigation
-const LandingPage = ({ onGoToShop }) => {
+    
   return (
     <div className="bg-gray-50 font-sans">
       <main className="container mx-auto px-4 py-16 text-center">
@@ -43,7 +49,7 @@ const LandingPage = ({ onGoToShop }) => {
           </p>
           <button
             className="bg-indigo-600 text-white font-bold text-lg px-12 py-4 rounded-full shadow-lg hover:bg-indigo-700 transition transform hover:scale-105"
-            onClick={onGoToShop}
+            onClick={() => navigate("/home")}
           >
             Explore Products
           </button>
@@ -57,7 +63,8 @@ const LandingPage = ({ onGoToShop }) => {
               <div
                 key={index}
                 className="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 cursor-pointer"
-                onClick={feature.title === 'E-Shop for Components' ? onGoToShop : null}
+                onClick={feature.onClick}
+                
               >
                 <div className="text-indigo-600 mb-4">
                   <FontAwesomeIcon icon={feature.icon} className="text-4xl" />
@@ -76,7 +83,7 @@ const LandingPage = ({ onGoToShop }) => {
           <div className="flex justify-center space-x-4">
             <button
               className="bg-white text-indigo-600 font-bold px-8 py-3 rounded-full shadow-lg hover:bg-gray-100 transition"
-              onClick={onGoToShop}
+              onClick={()=>navigate("/home")}
             >
               Explore Products
             </button>
