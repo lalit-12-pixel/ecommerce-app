@@ -1,8 +1,11 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faBars, faHome, faTags, faPhone, faUser, faSearch, faTimes, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ cartCount, onCartClick, onSidebarOpen, onSearchClick, isSearchOpen, wishlistCount, onWishlistClick }) => {
+  const navigate = useNavigate();
+
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -15,7 +18,13 @@ const Header = ({ cartCount, onCartClick, onSidebarOpen, onSearchClick, isSearch
             >
               <FontAwesomeIcon icon={faBars} className="text-2xl" />
             </button>
-            <a href="#" className="text-2xl font-bold text-indigo-600">Innovative Hub</a>
+            <a
+              href="#"
+              onClick={() => navigate("/")}
+              className="text-2xl font-bold text-indigo-600"
+            >
+              Innovative Hub
+            </a>
           </div>
           <div className="flex items-center space-x-4">
             <button
@@ -67,7 +76,13 @@ const Header = ({ cartCount, onCartClick, onSidebarOpen, onSearchClick, isSearch
             >
               <FontAwesomeIcon icon={faBars} className="text-2xl" />
             </button>
-            <a href="#" className="text-2xl font-bold text-indigo-600">Innovative Hub</a>
+            <a
+              href="#"
+              onClick={() => navigate("/")}
+              className="text-2xl font-bold text-indigo-600"
+            >
+              Innovative Hub
+            </a>
           </div>
 
           {/* Middle Section: Search Bar */}
@@ -86,21 +101,25 @@ const Header = ({ cartCount, onCartClick, onSidebarOpen, onSearchClick, isSearch
           {/* Right Section: Navigation Links and Icons */}
           <div className="flex items-center space-x-6 ml-auto">
             <nav className="flex items-center space-x-6">
-              <a href="#" className="text-gray-600 hover:text-indigo-600 transition-colors duration-300 flex items-center space-x-2">
+              <a
+                href="#"
+                onClick={() => navigate("/")}
+                className="text-gray-600 hover:text-indigo-600 transition-colors duration-300 flex items-center space-x-2"
+              >
                 <FontAwesomeIcon icon={faHome} />
                 <span className="hidden lg:inline">Home</span>
               </a>
-              <a href="#" className="text-gray-600 hover:text-indigo-600 transition-colors duration-300 flex items-center space-x-2">
+              <a href="#" onClick={() => navigate("/deals")} className="text-gray-600 hover:text-indigo-600 transition-colors duration-300 flex items-center space-x-2">
                 <FontAwesomeIcon icon={faTags} />
                 <span className="hidden lg:inline">Deals</span>
               </a>
-              <a href="#" className="text-gray-600 hover:text-indigo-600 transition-colors duration-300 flex items-center space-x-2">
+              <a href="#" onClick={() => navigate("/contact")} className="text-gray-600 hover:text-indigo-600 transition-colors duration-300 flex items-center space-x-2">
                 <FontAwesomeIcon icon={faPhone} />
                 <span className="hidden lg:inline">Contact</span>
               </a>
             </nav>
             <div className="flex items-center space-x-4">
-              <a href="#" className="text-gray-600 hover:text-indigo-600 transition-colors duration-300 flex items-center space-x-2">
+              <a href="#" onClick={() => navigate("/account")} className="text-gray-600 hover:text-indigo-600 transition-colors duration-300 flex items-center space-x-2">
                 <FontAwesomeIcon icon={faUser} />
                 <span className="hidden lg:inline">Account</span>
               </a>
