@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 
-// The LandingPage component now accepts a prop to handle navigation
 const LandingPage = () => {
     const navigate = useNavigate();
     const features = [
@@ -84,7 +83,10 @@ const LandingPage = () => {
                         >
                             Explore Products
                         </button>
-                        <button className="bg-transparent border-2 border-white text-white font-bold px-8 py-3 rounded-full hover:bg-white hover:text-indigo-600 transition">
+                        <button
+                            className="bg-transparent border-2 border-white text-white font-bold px-8 py-3 rounded-full hover:bg-white hover:text-indigo-600 transition"
+                            onClick={() => navigate("/signin")}
+                        >
                             Sign Up Now
                         </button>
                     </div>
