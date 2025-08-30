@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -12,13 +13,18 @@ import BackToTopButton from "./components/BackToTopButton";
 import Wishlist from "./components/Wishlist";
 
 const Ecomm = () => {
+
+  const navigate = useNavigate();
+
+  
+  /* ---------- STATES ---------- */
+  const [user, setUser] = useState(null); // logged-in user
   const [products, setProducts] = useState([]);
   const [filteredCategory, setFilteredCategory] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -30,6 +36,23 @@ const Ecomm = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  /* ---------- FETCH USER SESSION ---------- */
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("http://localhost:3001", {
+          credentials: "include",
+        });
+        if (!res.ok) throw new Error("Not logged in");
+        const data = await res.json();
+        setUser(data.user || null);
+      } catch (err) {
+        setUser(null);
+      }
+    };
+    fetchUser();
+  }, []);
 
   /* ---------- FETCH PRODUCTS ---------- */
   useEffect(() => {
@@ -52,16 +75,15 @@ const Ecomm = () => {
 
   /* ---------- FETCH CART + WISHLIST ---------- */
   useEffect(() => {
+    if (!user) return; // skip if not logged in
     const fetchData = async () => {
       try {
         const [cartRes, wishlistRes] = await Promise.all([
           fetch("http://localhost:3001/cart", { credentials: "include" }),
           fetch("http://localhost:3001/wishlist", { credentials: "include" }),
         ]);
-
         const cartData = await cartRes.json();
         const wishlistData = await wishlistRes.json();
-
         setCart(cartData.cart || []);
         setWishlist(wishlistData.wishlist || []);
       } catch (err) {
@@ -69,12 +91,21 @@ const Ecomm = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [user]);
+
+  /* ---------- HELPER: REDIRECT IF NOT LOGGED IN ---------- */
+  const requireLogin = () => {
+    if (!user) {
+      navigate("/login");
+      return false;
+    }
+    return true;
+  };
 
   /* ---------- CART ACTIONS ---------- */
   const addToCartFromWishlist = async (productId) => {
+    if (!requireLogin()) return;
     try {
-      // send quantity = 1 when adding from wishlist
       await addToCart(productId, 1);
       removeFromWishlist(productId);
     } catch (err) {
@@ -82,9 +113,8 @@ const Ecomm = () => {
     }
   };
 
-  // Update addToCart function to accept quantity
-  // Add to cart
   const addToCart = async (productId, quantity = 1) => {
+    if (!requireLogin()) return;
     try {
       const res = await fetch(`http://localhost:3001/cart/${productId}`, {
         method: "PATCH",
@@ -93,16 +123,15 @@ const Ecomm = () => {
         body: JSON.stringify({ quantity }),
       });
       if (!res.ok) throw new Error("Add to cart failed");
-
       const data = await res.json();
-      setCart(data.cart || []); // ✅ use backend response
+      setCart(data.cart || []);
     } catch (err) {
       console.error(err);
     }
   };
 
-  // Update quantity
   const onUpdateQuantity = async (productId, newQuantity) => {
+    if (!requireLogin()) return;
     try {
       const res = await fetch(`http://localhost:3001/cart/${productId}`, {
         method: "PATCH",
@@ -111,25 +140,23 @@ const Ecomm = () => {
         body: JSON.stringify({ quantity: newQuantity }),
       });
       if (!res.ok) throw new Error("Update quantity failed");
-
       const data = await res.json();
-      setCart(data.cart || []); // ✅ always take from backend
+      setCart(data.cart || []);
     } catch (err) {
       console.error(err);
     }
   };
 
-  // Remove item
   const onRemoveItem = async (productId) => {
+    if (!requireLogin()) return;
     try {
       const res = await fetch(`http://localhost:3001/cart/${productId}`, {
         method: "DELETE",
         credentials: "include",
       });
       if (!res.ok) throw new Error("Remove item failed");
-
       const data = await res.json();
-      setCart(data.cart || []); // ✅ always take from backend
+      setCart(data.cart || []);
     } catch (err) {
       console.error(err);
     }
@@ -137,21 +164,17 @@ const Ecomm = () => {
 
   /* ---------- WISHLIST ACTIONS ---------- */
   const addToWishlist = async (productId) => {
+    if (!requireLogin()) return;
     try {
       const res = await fetch(`http://localhost:3001/wishlist/${productId}`, {
         method: "PATCH",
         credentials: "include",
       });
-
       if (!res.ok) {
         const errorData = await res.json();
-        console.error(
-          "Add to wishlist failed:",
-          errorData.error || res.statusText
-        );
+        console.error("Add to wishlist failed:", errorData.error || res.statusText);
         return;
       }
-
       const data = await res.json();
       setWishlist(Array.isArray(data.wishlist) ? data.wishlist : []);
     } catch (err) {
@@ -161,21 +184,17 @@ const Ecomm = () => {
   };
 
   const removeFromWishlist = async (productId) => {
+    if (!requireLogin()) return;
     try {
       const res = await fetch(`http://localhost:3001/wishlist/${productId}`, {
         method: "DELETE",
         credentials: "include",
       });
-
       if (!res.ok) {
         const errorData = await res.json();
-        console.error(
-          "Remove from wishlist failed:",
-          errorData.error || res.statusText
-        );
+        console.error("Remove from wishlist failed:", errorData.error || res.statusText);
         return;
       }
-
       const data = await res.json();
       setWishlist(Array.isArray(data.wishlist) ? data.wishlist : []);
     } catch (err) {
@@ -186,6 +205,7 @@ const Ecomm = () => {
 
   /* ---------- CHECKOUT ---------- */
   const handleCheckout = async () => {
+    if (!requireLogin()) return;
     try {
       await fetch("http://localhost:3001/orders", {
         method: "POST",
@@ -199,6 +219,7 @@ const Ecomm = () => {
     }
   };
 
+  /* ---------- CALCULATE CART & WISHLIST ---------- */
   const cartSubtotal = (cart || []).reduce(
     (total, item) => total + (item.product?.price || 0) * (item.quantity || 0),
     0
@@ -211,6 +232,7 @@ const Ecomm = () => {
 
   const wishlistCount = (wishlist || []).length;
 
+  /* ---------- OTHER HANDLERS ---------- */
   const toggleSearch = () => setIsSearchOpen((prev) => !prev);
 
   const handleCategorySelect = (category) => {
@@ -231,12 +253,18 @@ const Ecomm = () => {
     <div className="bg-gray-50">
       <Header
         cartCount={cartCount}
-        onCartClick={() => setIsCartOpen(true)}
+        onCartClick={() => {
+          if (!requireLogin()) return;
+          setIsCartOpen(true);
+        }}
         onSidebarOpen={() => setIsSidebarOpen(true)}
         onSearchClick={toggleSearch}
         isSearchOpen={isSearchOpen}
         wishlistCount={wishlistCount}
-        onWishlistClick={() => setIsWishlistOpen(true)}
+        onWishlistClick={() => {
+          if (!requireLogin()) return;
+          setIsWishlistOpen(true);
+        }}
       />
 
       {isSidebarOpen && (
@@ -270,7 +298,7 @@ const Ecomm = () => {
         cart={cart}
         isCartOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
-        onRemoveItem={onRemoveItem} // ✅ fixed function name
+        onRemoveItem={onRemoveItem}
         onUpdateQuantity={onUpdateQuantity}
         onCheckout={handleCheckout}
         cartSubtotal={cartSubtotal}

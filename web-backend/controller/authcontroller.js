@@ -3,7 +3,7 @@ const { check, validationResult } = require("express-validator");
 const User = require("../models/User");
 const Product = require("../models/Product");
 
-
+// ==================== SIGNUP ====================
 exports.signup = [
   check("name").trim().isLength({ min: 2 }).withMessage("Name too short"),
   check("email")
@@ -15,11 +15,16 @@ exports.signup = [
       if (existing) throw new Error("Email already registered");
     }),
   check("password")
-    .isLength({ min: 8 }).withMessage("Min 8 characters")
-    .matches(/[A-Z]/).withMessage("At least one uppercase letter")
-    .matches(/[a-z]/).withMessage("At least one lowercase letter")
-    .matches(/[0-9]/).withMessage("At least one number")
-    .matches(/[!@&,.]/).withMessage("At least one special character"),
+    .isLength({ min: 8 })
+    .withMessage("Min 8 characters")
+    .matches(/[A-Z]/)
+    .withMessage("At least one uppercase letter")
+    .matches(/[a-z]/)
+    .withMessage("At least one lowercase letter")
+    .matches(/[0-9]/)
+    .withMessage("At least one number")
+    .matches(/[!@&,.]/)
+    .withMessage("At least one special character"),
   check("confirmPassword").custom((val, { req }) => {
     if (val !== req.body.password) throw new Error("Passwords do not match");
     return true;
@@ -30,19 +35,19 @@ exports.signup = [
     if (!errors.isEmpty())
       return res.status(422).json({ success: false, errors: errors.array() });
 
-    const { name, email, password, username } = req.body;
+    const { name, email, password } = req.body;
 
     try {
       const hashedPassword = await bcrypt.hash(password, 12);
 
-      const user = new User({ name, email, password: hashedPassword, username });
+      const user = new User({ name, email, password: hashedPassword });
       await user.save();
 
+      // Store in session
       req.session.isLoggedIn = true;
       req.session.user = {
         _id: user._id,
         name: user.name,
-        username: user.username,
         email: user.email,
       };
 
@@ -58,38 +63,49 @@ exports.signup = [
   },
 ];
 
+// ==================== LOGIN ====================
 exports.login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (!user)
-      return res.status(422).json({ success: false, errors: ["User not found"] });
+      return res
+        .status(422)
+        .json({ success: false, errors: ["User not found"] });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
-      return res.status(422).json({ success: false, errors: ["Invalid password"] });
+      return res
+        .status(422)
+        .json({ success: false, errors: ["Invalid password"] });
 
+    // ✅ Store in session
     req.session.isLoggedIn = true;
     req.session.user = {
       _id: user._id,
       name: user.name,
-      username: user.username,
       email: user.email,
     };
 
-    res.json({ success: true, message: "Login successful", user: req.session.user });
+    res.json({
+      success: true,
+      message: "Login successful",
+      user: req.session.user,
+    });
   } catch (err) {
+    console.error("Login error:", err);
     res.status(500).json({ success: false, errors: ["Server error"] });
   }
 };
 
+// ==================== LOGOUT ====================
 exports.logout = (req, res) => {
   req.session.destroy((err) => {
-    if (err) return res.status(500).json({ success: false, error: "Logout failed" });
+    if (err)
+      return res.status(500).json({ success: false, error: "Logout failed" });
     res.json({ success: true, message: "Logged out successfully" });
   });
 };
-
 
 exports.getProducts = async (req, res) => {
   try {

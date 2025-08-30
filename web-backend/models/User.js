@@ -10,17 +10,19 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
       lowercase: true,
       trim: true,
     },
     password: {
       type: String,
       required: function () {
-        return !this.googleId; // require password only if not Google login
+        return !this.googleId; 
       },
     },
-
+    googleId: {   
+      type: String,
+      required: false,
+    },
     wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     cart: [
       {

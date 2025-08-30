@@ -77,6 +77,7 @@ const Login = () => {
                 border: "1px solid #ff4d4d",
                 color: "#cc0000",
                 padding: "12px",
+                  fontSize: "0.7rem",
                 borderRadius: "8px",
                 marginBottom: "20px",
               }}
@@ -199,7 +200,7 @@ const Login = () => {
           >
             Don't have an account?{" "}
             <Link
-              to="/signup"
+              to="/signin"
               style={{
                 color: "#0d6efd",
                 textDecoration: "none",

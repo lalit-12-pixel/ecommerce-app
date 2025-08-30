@@ -55,7 +55,7 @@ const Signup = () => {
       <Helmet>
         <title>Create Your Account</title>
       </Helmet>
-      <div className="container " style={{width: "100%"}}>
+      <div className="container " style={{ width: "100%" }}>
         <div className="row justify-content-center">
           <div
             className="col-md-10 col-lg-8 col-xl-6"
@@ -72,13 +72,26 @@ const Signup = () => {
             >
               <h2
                 className="text-center mb-4 fw-bold"
-                style={{ fontSize: "1.7rem", fontWeight: "600", userSelect: "none", }}
+                style={{
+                  fontSize: "1.7rem",
+                  fontWeight: "600",
+                  userSelect: "none",
+                }}
               >
                 Create Your Account
               </h2>
 
               {errors?.length > 0 && (
-                <div className="alert alert-danger">
+                <div
+                  style={{
+                    border: "1px solid #ff4d4d",
+                    color: "#cc0000",
+                    padding: "12px",
+                    fontSize: "0.7rem",
+                    borderRadius: "8px",
+                    marginBottom: "20px",
+                  }}
+                >
                   <ul className="mb-0">
                     {errors.map((err, index) => (
                       <li key={index}>{err.msg || err}</li>
@@ -104,7 +117,7 @@ const Signup = () => {
                     required
                   />
                 </div>
-                
+
                 <div className="mb-3">
                   <input
                     type="email"
@@ -160,10 +173,10 @@ const Signup = () => {
                   type="submit"
                   className="btn btn-success w-100 mb-2"
                   style={{
-                    padding: "10px",
-                    fontSize: "0.95rem",
-                    fontWeight: "500",
-                     userSelect: "none",
+                    padding: "12px",
+                    fontSize: "1rem",
+                    fontWeight: "600",
+                    userSelect: "none",
                   }}
                 >
                   Sign Up
@@ -177,25 +190,33 @@ const Signup = () => {
                 onClick={handleGoogleSignup}
                 className="  w-100 d-flex align-items-center justify-content-center gap-2"
                 style={{
-                  padding: "10px",
-                  fontSize: "0.95rem",
-                  background: "#ffff",
-                  border: "none",
-                  borderRadius: "8px",
-                  color: "rgba(62, 58, 58, 1)",
+                  padding: "12px",
+                  width: "100%",
                   fontWeight: "600",
-                   userSelect: "none",
+                  fontSize: "1rem",
+                  borderRadius: "10px",
+                  border: "1px solid #ccc",
+                  backgroundColor: "#fff",
+                  color: "#444",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "10px",
+                  marginBottom: "10px",
                 }}
               >
                 <img
                   src="/google.png"
                   alt="Google"
-                  style={{ width: "2rem", height: "2rem" ,}}
+                  style={{ width: "2rem", height: "2rem" }}
                 />
                 Sign up with Google
               </button>
 
-              <p className="mt-4 text-center" style={{ fontSize: "0.9rem" , userSelect: "none",}}>
+              <p
+                className="mt-4 text-center"
+                style={{ fontSize: "0.9rem", userSelect: "none" }}
+              >
                 Already have an account?{" "}
                 <Link to="/login" className="text-primary text-decoration-none">
                   Login here

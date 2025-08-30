@@ -3,7 +3,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLaptop, faTshirt, faHome, faRunning, faTimes, faTags, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const categories = [
     { name: 'Electronics', icon: faLaptop, key: 'electronics' },
@@ -25,13 +25,13 @@ const CategorySidebar = ({ isOpen, onClose, onSelectCategory, filteredCategory }
             className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform transition-transform duration-300 z-50 overflow-y-auto ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
         >
             <div className="p-4 border-b flex justify-between items-center">
-                <a 
-                    href="#" 
-                    onClick={() => handleNavigate("/")}
+               <Link
+                    to="/" 
                     className="text-xl font-bold text-indigo-600"
+                     style={{textDecoration:"none"}}
                 >
                     Innovative Hub
-                </a>
+                </Link>
                 <button onClick={onClose} className="text-gray-500 hover:text-gray-800">
                     <FontAwesomeIcon icon={faTimes} className="text-xl" />
                 </button>
@@ -51,34 +51,35 @@ const CategorySidebar = ({ isOpen, onClose, onSelectCategory, filteredCategory }
                             </a>
                         </li>
                         <li>
-                            <a 
-                                href="#" 
-                                onClick={() => handleNavigate("/deals")} 
+                            <Link
+                                to="#"
                                 className="w-full text-left p-2 rounded-lg flex items-center space-x-3 transition-colors duration-200 hover:bg-gray-100"
+                                 style={{textDecoration:"none"}}
                             >
                                 <FontAwesomeIcon icon={faTags} className="text-lg" />
                                 <span>Deals</span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a 
-                                href="#" 
-                                onClick={() => handleNavigate("/contact")}
+                            <Link
+                                to="#  "
                                 className="w-full text-left p-2 rounded-lg flex items-center space-x-3 transition-colors duration-200 hover:bg-gray-100"
+                                 style={{textDecoration:"none"}}
                             >
                                 <FontAwesomeIcon icon={faPhone} className="text-lg" />
                                 <span>Contact</span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a 
-                                href="#" 
-                                onClick={() => handleNavigate("/account")} 
+                            <Link
+                                to="#"
+                                onClick={() => handleNavigate("/")}
                                 className="w-full text-left p-2 rounded-lg flex items-center space-x-3 transition-colors duration-200 hover:bg-gray-100"
+                                 style={{textDecoration:"none"}}
                             >
                                 <FontAwesomeIcon icon={faUser} className="text-lg" />
                                 <span>Account</span>
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

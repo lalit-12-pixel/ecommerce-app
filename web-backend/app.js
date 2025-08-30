@@ -78,10 +78,7 @@ app.get("/", async (req, res) => {
   
 
 
-
-
-
-app.use(postRouter); 
+app.use(postRouter);
 
 
 app.use(errorsController.pageNotFound);

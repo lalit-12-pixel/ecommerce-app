@@ -85,7 +85,7 @@ export default function AddProduct() {
           required
         />
         <input
-          type="number"
+          type="text"
           name="stock"
           placeholder="Stock"
           value={formData.stock}

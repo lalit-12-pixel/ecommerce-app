@@ -7,10 +7,10 @@ const productSchema = new mongoose.Schema(
     description: { type: String, trim: true },
     mrp: { type: Number, required: true },
     price: { type: Number, required: true },
-    stock: { type: Number, default: 0 },
+    stock: { type: String, default: "In Stock" },
     category: { type: String, trim: true },
-    image: { type: String }, 
-    ratings:{type: Number,default:4},
+    image: { type: String },
+    ratings: { type: Number, default: 4 },
   },
   { timestamps: true }
 );

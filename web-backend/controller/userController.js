@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 /* ✅ Wishlist */
 exports.addToWishlist = async (req, res) => {
+  console.log(req.session);
   try {
     const { productId } = req.params;
     const user = await User.findById(req.session.user._id).populate("wishlist");
@@ -119,6 +120,7 @@ exports.removeFromCart = async (req, res) => {
 };
 
 exports.getCart = async (req, res) => {
+    console.log(req.session);
   try {
     const user = await User.findById(req.session.user._id).populate("cart.product");
     res.json({ cart: user.cart });

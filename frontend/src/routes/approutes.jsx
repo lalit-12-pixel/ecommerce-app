@@ -7,6 +7,7 @@ import SignInPage from "../components/SignInPage";
 import AccountPage from "../components/AccountPage";
 import AddProduct from "../components/addproduct";
 import ComingSoonPage from "../components/ComingSoonPage";
+import MyOrdersPage from "../components/Myorders";
 
 export const router = createBrowserRouter([
 
@@ -38,5 +39,9 @@ export const router = createBrowserRouter([
     {
         path: "/add-products",
         element: <AddProduct />,
+    },
+     {
+        path: "/my-orders",
+        element: <MyOrdersPage />,
     },
 ]);
