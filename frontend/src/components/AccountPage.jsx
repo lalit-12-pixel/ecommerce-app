@@ -45,19 +45,13 @@ const AccountPage = ({ setIsCartOpen, setIsWishlistOpen }) => {
       description:
         "View your order history, track shipments, and manage returns.",
       icon: faBox,
-      onClick: () => navigate("/my-orders"),
+      onClick: () => navigate("/home/my-orders"),
     },
     {
       name: "Wishlist",
       description: "Review and manage products saved to your wishlist.",
       icon: faHeart,
-      onClick: () => setIsWishlistOpen(true),
-    },
-    {
-      name: "My Cart",
-      description: "View and manage your shopping cart items before checkout.",
-      icon: faShoppingCart,
-      onClick: () => setIsCartOpen(true),
+      onClick: () => navigate("/home/my-wishlist"),
     },
     {
       name: "Account Settings",
@@ -70,21 +64,19 @@ const AccountPage = ({ setIsCartOpen, setIsWishlistOpen }) => {
       description:
         "Save and manage shipping and billing addresses for faster checkout.",
       icon: faMapMarkerAlt,
-      onClick: () => alert("Address Book page coming soon!"),
+      onClick: () => navigate("/home/my-addresses"),
     },
   ];
 
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col justify-between font-sans">
-      <Header
-        cartCount={0}
-        onCartClick={() => setIsCartOpen(true)}
-        onSidebarOpen={() => {}}
-        onSearchClick={() => {}}
-        isSearchOpen={false}
-        wishlistCount={0}
-        onWishlistClick={() => setIsWishlistOpen(true)}
-      />
+
+
+
+
+
+
+      
       <main className="flex-grow container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white p-8 rounded-xl shadow-lg">
@@ -154,7 +146,6 @@ const AccountPage = ({ setIsCartOpen, setIsWishlistOpen }) => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

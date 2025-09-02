@@ -18,7 +18,7 @@ const ProductViewPage = ({ product, onClose, onAddToCart, addToWishlist }) => {
     };
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 p-4" style={{ userSelect: "none" }}>
         <div className="bg-white rounded-lg shadow-xl p-8 max-w-4xl w-full relative overflow-y-auto max-h-full">
             <button
                 onClick={onClose}
@@ -88,11 +88,8 @@ const ProductViewPage = ({ product, onClose, onAddToCart, addToWishlist }) => {
                         </button>
                     </div>
 
-                    {/* Reviews Section */}
-                    <div className="mt-8 pt-4 border-t border-gray-200">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">Customer Reviews</h2>
-                        <p className="text-gray-500">There are no reviews for this product yet.</p>
-                    </div>
+                    
+                  
                 </div>
             </div>
         </div>

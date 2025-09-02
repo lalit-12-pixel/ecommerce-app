@@ -18,6 +18,7 @@ const cors = require('cors');
 const postRouter = require('./router/postsrouter');
 const errorsController = require('./controller/error');
 const authrouter = require('./router/authrouter');
+const addressRouter = require('./router/addressRouter');
 
 const DB_PATH = "mongodb+srv://innovativehubofficial:Innopassword2025@innovative-hub.69vlvp3.mongodb.net/?retryWrites=true&w=majority&appName=innovativehub";
 
@@ -79,6 +80,7 @@ app.get("/", async (req, res) => {
 
 
 app.use(postRouter);
+app.use(addressRouter);
 
 
 app.use(errorsController.pageNotFound);

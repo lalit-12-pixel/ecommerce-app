@@ -1,5 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import {
   faTimes,
   faCartPlus,
@@ -17,7 +18,7 @@ const Wishlist = ({
   if (!isWishlistOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden">
+    <div className="fixed inset-0 z-50 overflow-hidden" style={{ userSelect: "none" }}>
       {/* Background overlay */}
       <div
         className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"

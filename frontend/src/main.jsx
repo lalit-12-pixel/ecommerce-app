@@ -1,11 +1,74 @@
+// Styles
+import "tailwindcss/tailwind.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import React from "react";
-import { createRoot } from 'react-dom/client';
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { createRoot } from "react-dom/client";
+import React, { Children } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import LandingPage from "./components/LandingPage";
+import Ecomm from "./E-comm";
+import LoginPage from "./components/LoginPage";
+import SignInPage from "./components/SignInPage";
+import AccountPage from "./components/AccountPage";
+import AddProduct from "./components/addproduct";
+import ComingSoonPage from "./components/ComingSoonPage";
+import MyOrdersPage from "./components/Myorders";
 
-import App from './App.jsx'
+import App from "./App";
+import Wishlist from "./components/wishlistpage";
+import AddressBook from "./components/AddressPage";
+import Cart from "./components/Cart";
 
-createRoot(document.getElementById('root')).render(
-    <App />
-)
+export const routes = [
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "/signin",
+    element: <SignInPage />,
+  },
+  {
+    path: "/home",
+    element: <App />,
+    children: [
+      {
+        path: "",
+        element: <Ecomm />,
+      },
+      {
+        path: "account",
+        element: <AccountPage />,
+      },
+      {
+        path: "my-wishlist",
+        element: <Wishlist />,
+      },
+      {
+        path: "coming-soon",
+        element: <ComingSoonPage />,
+      },
+
+      {
+        path: "my-orders",
+        element: <MyOrdersPage />,
+      },
+      {
+        path: "my-addresses",
+        element: <AddressBook />,
+      },
+    ],
+  },
+  {
+    path: "add-products",
+    element: <AddProduct />,
+  },
+];
+
+const router = createBrowserRouter(routes);
+const root = createRoot(document.getElementById("root"));
+root.render(<RouterProvider router={router} />);

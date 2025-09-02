@@ -6,16 +6,15 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import {
   faFacebookF,
-  faTwitter,
   faInstagram,
-  faPinterest,
+  faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
     <footer
       className="bg-gray-800 text-white py-12"
-      style={{ textDecoration: "none" }}
+      style={{ textDecoration: "none", userSelect: "none" }}
     >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -26,17 +25,27 @@ const Footer = () => {
               learning at unbeatable prices.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-white">
+              <a
+                href="https://www.facebook.com/share/16yRNkUyZZ/"
+                target="_blank" 
+                className="text-gray-300 hover:text-white"
+              >
                 <FontAwesomeIcon icon={faFacebookF} />
               </a>
-              <a href="#" className="text-gray-300 hover:text-white">
-                <FontAwesomeIcon icon={faTwitter} />
+              <a
+                href="https://youtube.com/@inovative_hub?si=JxPTOjyIMjspwKi2"
+                target="_blank" 
+                className="text-gray-300 hover:text-white"
+              >
+                <FontAwesomeIcon icon={faYoutube} />
               </a>
-              <a href="#" className="text-gray-300 hover:text-white">
+
+              <a
+                href="https://www.instagram.com/innovative_hubofficial?igsh=MWQzMHpxZTltaWF2Zw=="
+                target="_blank" 
+                className="text-gray-300 hover:text-white"
+              >
                 <FontAwesomeIcon icon={faInstagram} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white">
-                <FontAwesomeIcon icon={faPinterest} />
               </a>
             </div>
           </div>
@@ -44,27 +53,47 @@ const Footer = () => {
             <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="#" className="text-gray-300 hover:text-white"  style={{textDecoration:"none"}}>
+                <Link
+                  to="/"
+                  className="text-gray-300 hover:text-white"
+                  style={{ textDecoration: "none" }}
+                >
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="#" className="text-gray-300 hover:text-white"  style={{textDecoration:"none"}}>
+                <Link
+                  to="/home"
+                  className="text-gray-300 hover:text-white"
+                  style={{ textDecoration: "none" }}
+                >
                   Products
                 </Link>
               </li>
               <li>
-                <Link to="#" className="text-gray-300 hover:text-white"  style={{textDecoration:"none"}}>
+                <Link
+                  to="#"
+                  className="text-gray-300 hover:text-white"
+                  style={{ textDecoration: "none" }}
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="#" className="text-gray-300 hover:text-white"  style={{textDecoration:"none"}}>
+                <Link
+                  to="#"
+                  className="text-gray-300 hover:text-white"
+                  style={{ textDecoration: "none" }}
+                >
                   Contact
                 </Link>
               </li>
               <li>
-                <Link to="#" className="text-gray-300 hover:text-white"  style={{textDecoration:"none"}}>
+                <Link
+                  to="#"
+                  className="text-gray-300 hover:text-white"
+                  style={{ textDecoration: "none" }}
+                >
                   FAQ
                 </Link>
               </li>
@@ -74,27 +103,47 @@ const Footer = () => {
             <h4 className="font-semibold text-lg mb-4">Customer Service</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="#" className="text-gray-300 hover:text-white"  style={{textDecoration:"none"}}>
+                <Link
+                  to="/#"
+                  className="text-gray-300 hover:text-white"
+                  style={{ textDecoration: "none" }}
+                >
                   My Account
                 </Link>
               </li>
               <li>
-                <Link to="#" className="text-gray-300 hover:text-white"  style={{textDecoration:"none"}}>
+                <Link
+                  to="/home/my-orders"
+                  className="text-gray-300 hover:text-white"
+                  style={{ textDecoration: "none" }}
+                >
                   Order Tracking
                 </Link>
               </li>
               <li>
-                <Link to="#" className="text-gray-300 hover:text-white"  style={{textDecoration:"none"}}>
+                <Link
+                  to="/home/my-wishlist"
+                  className="text-gray-300 hover:text-white"
+                  style={{ textDecoration: "none" }}
+                >
                   Wishlist
                 </Link>
               </li>
               <li>
-                <Link to="#" className="text-gray-300 hover:text-white"  style={{textDecoration:"none"}}>
+                <Link
+                  to="#"
+                  className="text-gray-300 hover:text-white"
+                  style={{ textDecoration: "none" }}
+                >
                   Shipping Policy
                 </Link>
               </li>
               <li>
-                <Link to="#" className="text-gray-300 hover:text-white"  style={{textDecoration:"none"}}>
+                <Link
+                  to="#"
+                  className="text-gray-300 hover:text-white"
+                  style={{ textDecoration: "none" }}
+                >
                   Returns & Refunds
                 </Link>
               </li>

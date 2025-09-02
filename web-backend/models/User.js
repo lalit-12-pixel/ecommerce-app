@@ -16,10 +16,10 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: function () {
-        return !this.googleId; 
+        return !this.googleId;
       },
     },
-    googleId: {   
+    googleId: {
       type: String,
       required: false,
     },
@@ -31,6 +31,18 @@ const userSchema = new mongoose.Schema(
       },
     ],
     orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
+    addresses: [
+      {
+        fullName: { type: String, required: true },
+        phone: { type: String, required: true },
+        street: { type: String, required: true },
+        city: { type: String, required: true },
+        state: { type: String, required: true },
+        postalCode: { type: String, required: true },
+        country: { type: String, default: "India" },
+        isDefault: { type: Boolean, default: false },
+      },
+    ],
   },
   { timestamps: true }
 );

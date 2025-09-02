@@ -23,6 +23,7 @@ const CategorySidebar = ({ isOpen, onClose, onSelectCategory, filteredCategory }
     return (
         <div
             className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform transition-transform duration-300 z-50 overflow-y-auto ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+            style={{ userSelect: "none" }}
         >
             <div className="p-4 border-b flex justify-between items-center">
                <Link
