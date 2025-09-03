@@ -1,7 +1,5 @@
 import React from "react";
 import ProductCard from "./ProductCard";
-import SpecialOffer from "./SpecialOffer";
-import Testimonials from "./Testimonials";
 
 const MainContent = ({
   products,
@@ -81,8 +79,6 @@ const MainContent = ({
           )}
         </div>
       </section>
-      <SpecialOffer />
-      <Testimonials />
     </main>
   );
 };

@@ -9,6 +9,7 @@ const OpenLoader = () => {
         height: "100vh",
         width: "100vw",
         zIndex: 1050,
+        background: "linear-gradient(to bottom right, #f9fafb, #e0e7ff)"
       }}
     >
       <div

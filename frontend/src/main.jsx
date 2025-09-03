@@ -18,6 +18,9 @@ import App from "./App";
 import Wishlist from "./components/wishlistpage";
 import AddressBook from "./components/AddressPage";
 import Cart from "./components/Cart";
+import AboutUs from "./components/AboutUs";
+import FAQPage from "./components/FAQPage";
+import ContactUsPage from "./components/ContactUsPage";
 
 export const routes = [
   {
@@ -66,6 +69,22 @@ export const routes = [
   {
     path: "add-products",
     element: <AddProduct />,
+  },
+  {
+    path: "about-us",
+    element: <AboutUs />,
+  },
+  {
+    path: "faq",
+    element: <FAQPage />,
+  },
+   {
+    path: "contact",
+    element: <ContactUsPage />,
+  },
+  {
+    path: "coming-soon",
+    element: <ComingSoonPage />,
   },
 ];
 

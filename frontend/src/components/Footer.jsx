@@ -72,7 +72,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="#"
+                  to="/about-us"
                   className="text-gray-300 hover:text-white"
                   style={{ textDecoration: "none" }}
                 >
@@ -81,7 +81,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="#"
+                  to="/contact"
                   className="text-gray-300 hover:text-white"
                   style={{ textDecoration: "none" }}
                 >
@@ -90,7 +90,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="#"
+                  to="/faq"
                   className="text-gray-300 hover:text-white"
                   style={{ textDecoration: "none" }}
                 >
@@ -127,24 +127,6 @@ const Footer = () => {
                   style={{ textDecoration: "none" }}
                 >
                   Wishlist
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="#"
-                  className="text-gray-300 hover:text-white"
-                  style={{ textDecoration: "none" }}
-                >
-                  Shipping Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="#"
-                  className="text-gray-300 hover:text-white"
-                  style={{ textDecoration: "none" }}
-                >
-                  Returns & Refunds
                 </Link>
               </li>
             </ul>

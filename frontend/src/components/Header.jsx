@@ -160,14 +160,6 @@ const Header = () => {
               <FontAwesomeIcon icon={faHome} />
               <span className="hidden lg:inline">Home</span>
             </Link>
-            <Link
-              to="/contact"
-              className="text-gray-600 hover:text-indigo-600 flex items-center space-x-2"
-              style={{ userSelect: "none", textDecoration: "none" }}
-            >
-              <FontAwesomeIcon icon={faPhone} />
-              <span className="hidden lg:inline">Contact</span>
-            </Link>
           </nav>
 
           <div className="flex items-center space-x-4">
