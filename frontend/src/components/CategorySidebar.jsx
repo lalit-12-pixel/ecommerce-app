@@ -6,30 +6,38 @@ import { faLaptop, faTshirt, faHome, faRunning, faTimes, faTags, faPhone, faUser
 import { Link, useNavigate } from "react-router-dom";
 
 const categories = [
-    { name: 'Electronics', icon: faLaptop, key: 'electronics' },
-    { name: 'Fashion', icon: faTshirt, key: 'fashion' },
-    { name: 'Home & Garden', icon: faHome, key: 'home' },
-    { name: 'Sports', icon: faRunning, key: 'sports' }
+    { name: "Electronics Components", key: "Electronics Components" },
+    { name: "Microcontroller Board", key: "Microcontroller Board" },
+    { name: "Electronics Module", key: "Electronics Module" },
+    { name: "Display", key: "Display" },
+    { name: "Battery and Charger", key: "Battery and Charger" },
+    { name: "Boards", key: "Boards" },
+    { name: "IoT Wireless Boards", key: "IoT Wireless Boards" },
+    { name: "Sensors", key: "Sensors" },
+    { name: "Power Supply", key: "Power Supply" },
+    { name: "Mic and Speaker", key: "Mic and Speaker" },
+    { name: "Motor and Motor Driver", key: "Motor and Motor Driver" },
+    { name: "Relay", key: "Relay" }
 ];
 
 const CategorySidebar = ({ isOpen, onClose, onSelectCategory, filteredCategory }) => {
     const navigate = useNavigate();
 
     const handleNavigate = (path) => {
-      navigate(path);
-      onClose(); // Close the sidebar after navigating
+        navigate(path);
+        onClose(); // Close the sidebar after navigating
     };
     
     return (
         <div
-            className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform transition-transform duration-300 z-50 overflow-y-auto ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+            className={`fixed inset-y-0 left-0 w-80 bg-white shadow-lg transform transition-transform duration-300 z-50 overflow-y-auto ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
             style={{ userSelect: "none" }}
         >
             <div className="p-4 border-b flex justify-between items-center">
                <Link
                     to="/" 
                     className="text-xl font-bold text-indigo-600"
-                     style={{textDecoration:"none"}}
+                    style={{textDecoration:"none"}}
                 >
                     Innovative Hub
                 </Link>
@@ -55,7 +63,7 @@ const CategorySidebar = ({ isOpen, onClose, onSelectCategory, filteredCategory }
                             <Link
                                 to="#"
                                 className="w-full text-left p-2 rounded-lg flex items-center space-x-3 transition-colors duration-200 hover:bg-gray-100"
-                                 style={{textDecoration:"none"}}
+                                style={{textDecoration:"none"}}
                             >
                                 <FontAwesomeIcon icon={faTags} className="text-lg" />
                                 <span>Deals</span>
@@ -63,9 +71,9 @@ const CategorySidebar = ({ isOpen, onClose, onSelectCategory, filteredCategory }
                         </li>
                         <li>
                             <Link
-                                to="#  "
+                                to="#"
                                 className="w-full text-left p-2 rounded-lg flex items-center space-x-3 transition-colors duration-200 hover:bg-gray-100"
-                                 style={{textDecoration:"none"}}
+                                style={{textDecoration:"none"}}
                             >
                                 <FontAwesomeIcon icon={faPhone} className="text-lg" />
                                 <span>Contact</span>
@@ -76,7 +84,7 @@ const CategorySidebar = ({ isOpen, onClose, onSelectCategory, filteredCategory }
                                 to="#"
                                 onClick={() => handleNavigate("/")}
                                 className="w-full text-left p-2 rounded-lg flex items-center space-x-3 transition-colors duration-200 hover:bg-gray-100"
-                                 style={{textDecoration:"none"}}
+                                style={{textDecoration:"none"}}
                             >
                                 <FontAwesomeIcon icon={faUser} className="text-lg" />
                                 <span>Account</span>
@@ -87,25 +95,26 @@ const CategorySidebar = ({ isOpen, onClose, onSelectCategory, filteredCategory }
 
                 <h4 className="text-lg font-semibold mb-4 border-t pt-4">Shop by Category</h4>
                 <ul className="space-y-4">
+                    <li>
+                        <button
+                             // ✨ FIX #1: Check for "All" (uppercase) for styling
+                            className={`w-full text-left p-2 rounded-lg flex items-center space-x-3 transition-colors duration-200 ${filteredCategory === 'All' || !filteredCategory ? 'bg-indigo-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
+                            // ✨ FIX #2: Send "All" (uppercase) on click
+                            onClick={() => onSelectCategory('All')}
+                        >
+                            <span>All Products</span>
+                        </button>
+                    </li>
                     {categories.map(category => (
                         <li key={category.key}>
                             <button
                                 className={`w-full text-left p-2 rounded-lg flex items-center space-x-3 transition-colors duration-200 ${filteredCategory === category.key ? 'bg-indigo-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
                                 onClick={() => onSelectCategory(category.key)}
                             >
-                                <FontAwesomeIcon icon={category.icon} className="text-lg" />
                                 <span>{category.name}</span>
                             </button>
                         </li>
                     ))}
-                    <li>
-                        <button
-                            className={`w-full text-left p-2 rounded-lg flex items-center space-x-3 transition-colors duration-200 ${filteredCategory === 'all' ? 'bg-indigo-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
-                            onClick={() => onSelectCategory('all')}
-                        >
-                            <span>All Products</span>
-                        </button>
-                    </li>
                 </ul>
             </div>
         </div>
