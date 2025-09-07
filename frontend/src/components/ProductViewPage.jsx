@@ -52,7 +52,7 @@ const ProductViewPage = ({ product, onClose, onAddToCart, addToWishlist }) => {
 
                     {/* Stock */}
                     <div className={`text-sm mb-2 ${product.stock > 0 ? "text-gray-500" : "text-red-500 font-semibold"}`}>
-                        {product.stock > 0 ? `In Stock: ${product.stock}` : "Out of Stock"}
+                        { product.stock > 0 ? "In Stock"  : "Out of Stock"}
                     </div>
 
                     {/* Price, MRP & Discount */}
