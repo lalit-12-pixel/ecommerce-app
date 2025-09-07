@@ -1,5 +1,21 @@
 import { useState } from "react";
 
+// ✨ Define the category options in an array
+const categories = [
+  "Electronics Components",
+  "Microcontroller Board",
+  "Electronics Module",
+  "Display",
+  "Battery and Charger",
+  "Boards",
+  "IoT Wireless Boards",
+  "Sensors",
+  "Power Supply",
+  "Mic and Speaker",
+  "Motor and Motor Driver",
+  "Relay",
+];
+
 export default function AddProduct() {
   const [formData, setFormData] = useState({
     name: "",
@@ -7,7 +23,7 @@ export default function AddProduct() {
     mrp: "",
     price: "",
     stock: "",
-    category: "",
+    category: "", // Keep initial value as empty string for the placeholder
     image: "",
   });
 
@@ -22,7 +38,7 @@ export default function AddProduct() {
       const res = await fetch("http://localhost:3001/add-products", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData), // image is just a string (URL)
+        body: JSON.stringify(formData),
       });
 
       const data = await res.json();
@@ -35,7 +51,7 @@ export default function AddProduct() {
           price: "",
           stock: "",
           category: "",
-          image: "", // reset image url input
+          image: "",
         });
       } else {
         alert("Error: " + data.error);
@@ -92,14 +108,25 @@ export default function AddProduct() {
           onChange={handleChange}
           className="border p-2 w-full"
         />
-        <input
-          type="text"
+
+        {/* ✨ Replaced the text input with a select dropdown */}
+        <select
           name="category"
-          placeholder="Category"
           value={formData.category}
           onChange={handleChange}
           className="border p-2 w-full"
-        />
+          required
+        >
+          <option value="" disabled>
+            Select a category
+          </option>
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+
         <input
           type="text"
           name="image"
