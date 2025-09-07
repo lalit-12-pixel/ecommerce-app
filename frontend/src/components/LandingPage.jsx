@@ -112,7 +112,7 @@ const LandingPage = () => {
           </section>
 
           {/* CTA */}
-          <section className="mt-20">
+          {/* <section className="mt-20">
             <h2 className="text-3xl font-bold mb-4">
               Ready to Start Your Next Project?
             </h2>
@@ -134,7 +134,7 @@ const LandingPage = () => {
                 Sign Up Now
               </button>
             </div>
-          </section>
+          </section> */}
         </div>
       </div>
 

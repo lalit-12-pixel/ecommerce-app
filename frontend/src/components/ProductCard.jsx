@@ -1,8 +1,13 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faCartPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar, faCartPlus, faHeart } from "@fortawesome/free-solid-svg-icons";
 
-const ProductCard = ({ product, onAddToCart, onProductClick, onAddToWishlist }) => {
+const ProductCard = ({
+  product,
+  onAddToCart,
+  onProductClick,
+  onAddToWishlist,
+}) => {
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
@@ -10,7 +15,7 @@ const ProductCard = ({ product, onAddToCart, onProductClick, onAddToWishlist }) 
         <FontAwesomeIcon
           key={i}
           icon={faStar}
-          className={i < rating ? 'text-yellow-400' : 'text-gray-300'}
+          className={i < rating ? "text-yellow-400" : "text-gray-300"}
         />
       );
     }
@@ -77,7 +82,6 @@ const ProductCard = ({ product, onAddToCart, onProductClick, onAddToWishlist }) 
       </div>
     </div>
   );
-
 };
 
 export default ProductCard;
