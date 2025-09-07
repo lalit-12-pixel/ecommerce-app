@@ -7,12 +7,19 @@ import {
   faReceipt,
 } from "@fortawesome/free-solid-svg-icons";
 import Loader from "./loader";
+import { EcommContext } from "../../store/ecomprovider";
+import { useContext } from "react";
 
 const MyOrdersPage = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedOrder, setExpandedOrder] = useState(null);
+
+   const {
+      user,
+       requireLogin,
+      } = useContext(EcommContext);
 
   useEffect(() => {
     fetch("http://localhost:3001/orders", {
@@ -35,7 +42,9 @@ const MyOrdersPage = () => {
     setExpandedOrder(expandedOrder === orderId ? null : orderId);
   };
 
+  if (!requireLogin()) navigate("/login");
   if (loading) return <Loader/>;
+
 
   return (
     <div className="container mx-auto px-4 py-16">

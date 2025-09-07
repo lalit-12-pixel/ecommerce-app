@@ -104,7 +104,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  to="/#"
+                  to="/home/account"
                   className="text-gray-300 hover:text-white"
                   style={{ textDecoration: "none" }}
                 >

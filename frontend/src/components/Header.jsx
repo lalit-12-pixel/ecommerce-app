@@ -21,12 +21,13 @@ const Header = () => {
     isSearchOpen,
     cartCount,
     wishlistCount,
-    cartSubtotal,
+      cartSubtotal,
     setIsSidebarOpen,
     setIsCartOpen,
     setIsWishlistOpen,
     setIsSearchOpen,
     setIsScrolled,
+    setSearchQuery
   } = useContext(EcommContext);
 
   // Scroll handler
@@ -99,6 +100,7 @@ const Header = () => {
           <div className="flex items-center space-x-2">
             <input
               type="text"
+              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for products..."
               className="flex-grow pl-4 pr-10 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
@@ -140,6 +142,7 @@ const Header = () => {
         <div className="flex-grow max-w-lg relative mx-8">
           <input
             type="text"
+             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search for products..."
             className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
           />
@@ -153,7 +156,7 @@ const Header = () => {
         <div className="flex items-center space-x-6">
           <nav className="flex items-center space-x-6">
             <Link
-              to="/"
+              to="/home"
               className="text-gray-600 hover:text-indigo-600 flex items-center space-x-2"
               style={{ userSelect: "none", textDecoration: "none" }}
             >

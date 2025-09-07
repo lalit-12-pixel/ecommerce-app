@@ -7,6 +7,8 @@ import Cart from "./components/Cart.jsx";
 import Wishlist from "./components/Wishlist.jsx";
 import CategorySidebar from "./components/CategorySidebar.jsx";
 import CheckoutModal from "./components/CheckoutModal.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import BackToTopButton from "./components/BackToTopButton.jsx";
 import ProductViewPage from "./components/ProductViewPage.jsx";
 import Loader from "./components/loader.jsx";
@@ -21,6 +23,7 @@ function App() {
 const AppContent = () => {
   const {
     cart,
+    requireLogin,
     wishlist,
     isSidebarOpen,
     isCartOpen,
@@ -31,6 +34,7 @@ const AppContent = () => {
     setIsSidebarOpen,
     setIsCartOpen,
     setIsWishlistOpen,
+    updateCartQuantity,
     loading,
     error,
     filteredProducts,
@@ -52,67 +56,84 @@ const AppContent = () => {
 
   return (
     <>
-      {loading ? (<Loader/>):(
-    <div className="bg-gray-50 min-h-screen">
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="bg-gray-50 min-h-screen">
+          <Header />
 
-      <Header />
+          <ToastContainer
+            position="top-right"
+            autoClose={1500}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            className="rounded-xl shadow-lg"
+            toastClassName="bg-gray-800 text-white font-semibold rounded-lg shadow-md"
+            bodyClassName="text-sm"
+          />
 
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-gray-600 bg-opacity-50 z-40 transition-opacity duration-300"
-          onClick={() => setIsSidebarOpen(false)}
-        />
+          {isSidebarOpen && (
+            <div
+              className="fixed inset-0 bg-gray-600 bg-opacity-50 z-40 transition-opacity duration-300"
+              onClick={() => setIsSidebarOpen(false)}
+            />
+          )}
+
+          {selectedProduct && (
+            <ProductViewPage
+              product={selectedProduct}
+              onClose={() => setSelectedProduct(null)}
+              onAddToCart={addToCart}
+              addToWishlist={addToWishlist}
+            />
+          )}
+
+          <CategorySidebar
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
+            onSelectCategory={handleCategorySelect}
+            filteredCategory={filteredCategory}
+          />
+
+          <Cart
+            cart={cart}
+            isCartOpen={isCartOpen}
+            onClose={() => setIsCartOpen(false)}
+            onRemoveItem={removeFromCart}
+            onUpdateQuantity={updateCartQuantity}
+            onCheckout={handleCheckout}
+            cartSubtotal={cartSubtotal}
+            onProductClick={handleProductClick}
+          />
+
+          <Wishlist
+            wishlist={wishlist}
+            isWishlistOpen={isWishlistOpen}
+            onClose={() => setIsWishlistOpen(false)}
+            onRemoveFromWishlist={removeFromWishlist}
+            onAddToCartFromWishlist={addToCartFromWishlist}
+            onProductClick={handleProductClick}
+          />
+
+          <CheckoutModal
+            isCheckoutModalOpen={isCheckoutModalOpen}
+            onClose={() => setIsCheckoutModalOpen(false)}
+          />
+
+          <BackToTopButton isScrolled={isScrolled} />
+
+          <Outlet />
+
+          <Footer />
+        </div>
       )}
-
-      {selectedProduct && (
-        <ProductViewPage
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-          onAddToCart={addToCart}
-          addToWishlist={addToWishlist}
-        />
-      )}
-
-      <CategorySidebar
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-        onSelectCategory={handleCategorySelect}
-        filteredCategory={filteredCategory}
-      />
-
-      <Cart
-        cart={cart}
-        isCartOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        onRemoveItem={removeFromCart}
-        onUpdateQuantity={() => {}}
-        onCheckout={handleCheckout}
-        cartSubtotal={cartSubtotal}
-        onProductClick={handleProductClick}
-      />
-
-      <Wishlist
-        wishlist={wishlist}
-        isWishlistOpen={isWishlistOpen}
-        onClose={() => setIsWishlistOpen(false)}
-        onRemoveFromWishlist={removeFromWishlist}
-        onAddToCartFromWishlist={addToCartFromWishlist}
-        onProductClick={handleProductClick}
-      />
-
-      <CheckoutModal
-        isCheckoutModalOpen={isCheckoutModalOpen}
-        onClose={() => setIsCheckoutModalOpen(false)}
-      />
-
-      <BackToTopButton isScrolled={isScrolled} />
-
-      <Outlet />
-
-      <Footer />
-    </div>
-    )}
-  </>
+    </>
   );
 };
 

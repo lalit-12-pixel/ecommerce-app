@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { EcommContext } from "../../store/ecomprovider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
+
 import {
   faCartPlus,
   faTrash,
@@ -12,9 +14,13 @@ const MyWishlistPage = () => {
   const {
     wishlist,
     addToCartFromWishlist,
+    requireLogin,
     removeFromWishlist,
     handleProductClick,
   } = useContext(EcommContext);
+  const navigate = useNavigate();
+
+   if (!requireLogin()) navigate("/login");
 
   return (
     // ✨ Added a container to center and constrain content width on larger screens
@@ -39,7 +45,7 @@ const MyWishlistPage = () => {
             </p>
             <button
               // ✨ This button should navigate the user to the products page
-              // onClick={() => navigate('/products')} 
+              onClick={() => navigate("/home")}
               className="inline-flex items-center gap-3 bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               <span>Explore Products</span>
@@ -60,7 +66,7 @@ const MyWishlistPage = () => {
                   className="cursor-pointer w-full md:w-1/3 xl:w-2/5 md:flex-shrink-0"
                   onClick={() => handleProductClick(item._id || item.id)}
                 >
-                   {/* ✨ Added an aspect ratio to maintain image consistency */}
+                  {/* ✨ Added an aspect ratio to maintain image consistency */}
                   <img
                     src={item.image}
                     alt={item.name}
@@ -93,15 +99,19 @@ const MyWishlistPage = () => {
                             ₹{item.mrp.toFixed(2)}
                           </p>
                           <p className="text-base font-semibold text-green-600 bg-green-100 px-2 py-0.5 rounded-md">
-                            {Math.round(((item.mrp - item.price) / item.mrp) * 100)}% OFF
+                            {Math.round(
+                              ((item.mrp - item.price) / item.mrp) * 100
+                            )}
+                            % OFF
                           </p>
                         </>
                       )}
                     </div>
-                    
+
                     {/* ✨ Stock status with a more distinct visual style */}
                     {item.stock !== undefined && (
-                      <p className={`text-sm font-bold mb-5 ${
+                      <p
+                        className={`text-sm font-bold mb-5 ${
                           item.stock > 0 ? "text-green-700" : "text-red-700"
                         }`}
                       >
@@ -113,10 +123,11 @@ const MyWishlistPage = () => {
                     {item.description && (
                       <ul className="list-disc list-inside text-gray-600 text-sm space-y-1.5 mb-6">
                         {item.description
-                          .split(".")
-                          .filter(point => point.trim()) // ✨ Ensure empty strings are not rendered
+                          .split(/[.\n]/) // ✅ Split by period or newline
+                          .map((point) => point.trim()) // ✅ Clean up whitespace
+                          .filter((point) => point.length > 0) // ✅ Remove empty lines
                           .map((point, index) => (
-                            <li key={index}>{point.trim()}</li>
+                            <li key={index}>{point}</li>
                           ))}
                       </ul>
                     )}
@@ -125,12 +136,16 @@ const MyWishlistPage = () => {
                   {/* Action Buttons */}
                   <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-end border-t pt-5">
                     <button
-                      onClick={() => addToCartFromWishlist(item._id)}
+                      onClick={() => {
+                        addToCartFromWishlist(item._id);
+                        removeFromWishlist(item._id);
+                      }}
                       disabled={item.stock === 0}
                       className={`py-3 px-6 rounded-lg font-semibold flex items-center justify-center gap-2 text-base transition-all duration-300 w-full sm:w-auto disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500
-                        ${item.stock > 0
-                          ? "bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm hover:shadow-lg transform hover:-translate-y-0.5"
-                          : "bg-gray-300 text-gray-500"
+                        ${
+                          item.stock > 0
+                            ? "bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm hover:shadow-lg transform hover:-translate-y-0.5"
+                            : "bg-gray-300 text-gray-500"
                         }`}
                     >
                       <FontAwesomeIcon icon={faCartPlus} />

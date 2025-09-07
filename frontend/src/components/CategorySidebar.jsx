@@ -25,7 +25,7 @@ const CategorySidebar = ({ isOpen, onClose, onSelectCategory, filteredCategory }
 
     const handleNavigate = (path) => {
         navigate(path);
-        onClose(); // Close the sidebar after navigating
+        onClose(); 
     };
     
     return (
@@ -93,13 +93,13 @@ const CategorySidebar = ({ isOpen, onClose, onSelectCategory, filteredCategory }
                     </ul>
                 </div>
 
-                <h4 className="text-lg font-semibold mb-4 border-t pt-4">Shop by Category</h4>
+                <h4 className="text-lg font-semibold mb-4  pt-4">Shop by Category</h4>
                 <ul className="space-y-4">
                     <li>
                         <button
-                             // ✨ FIX #1: Check for "All" (uppercase) for styling
+                            
                             className={`w-full text-left p-2 rounded-lg flex items-center space-x-3 transition-colors duration-200 ${filteredCategory === 'All' || !filteredCategory ? 'bg-indigo-600 text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
-                            // ✨ FIX #2: Send "All" (uppercase) on click
+                         
                             onClick={() => onSelectCategory('All')}
                         >
                             <span>All Products</span>

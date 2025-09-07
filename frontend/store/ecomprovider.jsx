@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const EcommContext = createContext();
 
@@ -96,6 +97,7 @@ export const EcommProvider = ({ children }) => {
   /* ---------- CART ACTIONS ---------- */
   const addToCart = async (productId, quantity = 1) => {
     if (!requireLogin()) return;
+     toast.success(" Product added to cart!");
     try {
       const res = await fetch(`http://localhost:3001/cart/${productId}`, {
         method: "PATCH",
@@ -128,6 +130,12 @@ export const EcommProvider = ({ children }) => {
 
   const updateCartQuantity = async (productId, quantity) => {
     if (!requireLogin()) return;
+
+    setCart((prev) =>
+      prev.map((item) =>
+        item.product._id === productId ? { ...item, quantity } : item
+      )
+    );
     try {
       const res = await fetch(`http://localhost:3001/cart/${productId}`, {
         method: "PATCH",
@@ -151,6 +159,8 @@ export const EcommProvider = ({ children }) => {
   /* ---------- WISHLIST ACTIONS ---------- */
   const addToWishlist = async (productId) => {
     if (!requireLogin()) return;
+    toast.success(" Product added to wishlist!");
+    setWishlist((prev) => [...prev, { product: { _id: productId } }]);
     try {
       const res = await fetch(`http://localhost:3001/wishlist/${productId}`, {
         method: "PATCH",
@@ -209,10 +219,11 @@ export const EcommProvider = ({ children }) => {
   /* ---------- CATEGORY FILTER ---------- */
 
   const handleCategorySelect = (category) => {
-    setFilteredCategory(category); // ✅ update active filter button
+    setFilteredCategory(category);
+    setIsSidebarOpen(false);
 
     if (!category || category === "All") {
-      setFilteredProducts(products); // ✅ show all products
+      setFilteredProducts(products);
     } else {
       setFilteredProducts(products.filter((p) => p.category === category));
     }
@@ -223,6 +234,21 @@ export const EcommProvider = ({ children }) => {
     const product = products.find((p) => p._id === productId);
     setSelectedProduct(product);
   };
+
+  const setSearchQuery = (query) => {
+    if (!query) {
+      setFilteredProducts(products);
+      return;
+    }
+    const lowerQuery = query.toLowerCase();
+    const results = products.filter(
+      (p) =>
+        p.name.toLowerCase().includes(lowerQuery) ||
+        p.description.toLowerCase().includes(lowerQuery) ||
+        p.category.toLowerCase().includes(lowerQuery)
+    );
+    setFilteredProducts(results);
+  }
 
   return (
     <EcommContext.Provider
@@ -252,6 +278,7 @@ export const EcommProvider = ({ children }) => {
         removeFromWishlist,
         handleCheckout,
         cartSubtotal,
+        setSearchQuery,
         cartCount,
         wishlistCount,
         handleCategorySelect,

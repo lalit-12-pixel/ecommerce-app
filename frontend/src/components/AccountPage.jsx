@@ -2,22 +2,30 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import{ useContext} from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EcommContext } from "../../store/ecomprovider";
 import {
   faUser,
   faBox,
   faHeart,
   faCog,
   faMapMarkerAlt,
-  faSignOutAlt,
+  faSignOutAlt, 
   faSignInAlt,
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
 
 const AccountPage = ({ setIsCartOpen, setIsWishlistOpen }) => {
   const navigate = useNavigate();
+
+
+    const {
+    user,
+     requireLogin,
+    } = useContext(EcommContext);
 
   // In a real application, this state would come from a global state management solution (e.g., Context API, Redux)
   // or from a token stored in local storage/cookies.
@@ -67,16 +75,10 @@ const AccountPage = ({ setIsCartOpen, setIsWishlistOpen }) => {
       onClick: () => navigate("/home/my-addresses"),
     },
   ];
+  if (!requireLogin()) navigate("/login");
 
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col justify-between font-sans">
-
-
-
-
-
-
-      
       <main className="flex-grow container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white p-8 rounded-xl shadow-lg">

@@ -159,47 +159,54 @@ const Cart = ({
             </div>
 
             {/* Footer */}
-            <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
-              {/* Subtotal */}
-              <div className="flex justify-between text-base font-medium text-gray-900 mb-2">
-                <p>Total MRP</p>
-                <p>₹{isNaN(totalMrp) ? "0.00" : totalMrp.toFixed(2)}</p>
-              </div>
-              <div className="flex justify-between text-base text-green-600 mb-2">
-                <p>Total Savings</p>
-                <p>-₹{isNaN(totalSavings) ? "0.00" : totalSavings.toFixed(2)}</p>
-              </div>
-              <div className="flex justify-between text-lg font-semibold text-gray-900 mb-4">
-                <p>Subtotal</p>
-                <p>₹{isNaN(subtotal) ? "0.00" : subtotal.toFixed(2)}</p>
-              </div>
+            <div className="border-t border-gray-200 py-4 px-4 sm:px-6">
+  {/* Totals */}
+  <div className="space-y-1.5 text-sm">
+    <div className="flex justify-between text-gray-700">
+      <p>Total MRP</p>
+      <p>₹{isNaN(totalMrp) ? "0.00" : totalMrp.toFixed(2)}</p>
+    </div>
+    <div className="flex justify-between text-green-600">
+      <p>Total Savings</p>
+      <p>-₹{isNaN(totalSavings) ? "0.00" : totalSavings.toFixed(2)}</p>
+    </div>
+    <div className="flex justify-between text-base font-semibold text-gray-900 pt-2">
+      <p>Subtotal</p>
+      <p>₹{isNaN(subtotal) ? "0.00" : subtotal.toFixed(2)}</p>
+    </div>
+  </div>
 
-              <p className="mt-0.5 text-sm text-gray-500 mb-6">
-                Shipping and taxes calculated at checkout.
-              </p>
-              <button
-                className={`w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
-                  !hasInStockItems ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-                onClick={onCheckout}
-                disabled={!hasInStockItems}
-              >
-                Checkout
-              </button>
-              <div className="mt-6 flex justify-center text-sm text-center text-gray-500">
-                <p>
-                  or{" "}
-                  <button
-                    className="text-indigo-600 font-medium hover:text-indigo-500"
-                    onClick={onClose}
-                  >
-                    Continue Shopping{" "}
-                    <FontAwesomeIcon icon={faArrowRight} className="ml-1" />
-                  </button>
-                </p>
-              </div>
-            </div>
-          </div>
+  {/* Shipping Info */}
+  <p className="mt-2 text-xs text-gray-500">
+    Shipping and taxes calculated at checkout.
+  </p>
+
+  {/* Checkout Button */}
+  <button
+    className={`mt-4 w-full bg-indigo-600 border border-transparent rounded-lg py-2.5 px-6 flex items-center justify-center text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-500 transition ${
+      !hasInStockItems ? "opacity-50 cursor-not-allowed" : ""
+    }`}
+    onClick={onCheckout}
+    disabled={!hasInStockItems}
+  >
+    Checkout
+  </button>
+
+  {/* Continue Shopping */}
+  <div className="mt-4 flex justify-center text-xs text-gray-500">
+    <p>
+      or{" "}
+      <button
+        className="text-indigo-600 font-medium hover:text-indigo-500"
+        onClick={onClose}
+      >
+        Continue Shopping{" "}
+        <FontAwesomeIcon icon={faArrowRight} className="ml-1" />
+      </button>
+    </p>
+  </div>
+</div>
+</div>
         </div>
       </div>
     </div>
