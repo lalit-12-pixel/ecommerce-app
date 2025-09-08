@@ -26,14 +26,13 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://ecommerce-app-qcne.vercel.app",  
-      "https://www.inovative-hub.com/"           
+      "https://inovative-hub.com", // ✅ your custom domain
+      "https://www.innovative-hub.com", // ✅ if www also works
+      "https://ecommerce-app-qcne.vercel.app", // ✅ backend vercel domain (for testing)
     ],
     credentials: true,
   })
 );
-
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -86,7 +85,6 @@ app.use(addressRouter);
 
 app.use(errorsController.pageNotFound);
 
-
 mongoose
   .connect(DB_PATH)
   .then(() => {
@@ -96,4 +94,3 @@ mongoose
     console.error(" MongoDB connection error:", err);
   });
 module.exports = app;
-
