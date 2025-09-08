@@ -27,7 +27,7 @@ app.use(
   cors({
     origin: [
       "https://ecommerce-app-qcne.vercel.app",  
-      "https://www.innovative-hub.com"           
+      "https://www.inovative-hub.com/"           
     ],
     credentials: true,
   })
