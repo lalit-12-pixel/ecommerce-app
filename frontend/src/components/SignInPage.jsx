@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Signup = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:3001/signup", {
+      const res = await fetch(`${API_URL}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +48,7 @@ const Signup = () => {
   };
 
   const handleGoogleSignup = () => {
-    window.location.href = "http://localhost:3001/auth/google";
+    window.location.href = `${API_URL}/auth/google`;
   };
 
   return (

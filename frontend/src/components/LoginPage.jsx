@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Login = () => {
     const password = passwordRef.current.value;
 
     try {
-      const res = await fetch("http://localhost:3001/login", {
+      const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +39,7 @@ const Login = () => {
   };
 
   const handleGoogleSignup = () => {
-    window.location.href = "http://localhost:3001/auth/google";
+    window.location.href = `${API_URL}/auth/google`;
   };
 
   return (

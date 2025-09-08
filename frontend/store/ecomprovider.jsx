@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+const API_URL = import.meta.env.VITE_API_URL;
 export const EcommContext = createContext();
 
 export const EcommProvider = ({ children }) => {
@@ -31,7 +31,7 @@ export const EcommProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:3001", {
+        const res = await fetch(`${API_URL}/`, {
           credentials: "include",
         });
         if (!res.ok) throw new Error("Not logged in");
@@ -50,7 +50,7 @@ export const EcommProvider = ({ children }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:3001/products", {
+        const res = await fetch(`${API_URL}/products`, {
           credentials: "include",
         });
         const data = await res.json();
@@ -71,8 +71,8 @@ export const EcommProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const [cartRes, wishlistRes] = await Promise.all([
-          fetch("http://localhost:3001/cart", { credentials: "include" }),
-          fetch("http://localhost:3001/wishlist", { credentials: "include" }),
+          fetch(`${API_URL}/cart`, { credentials: "include" }),
+          fetch(`${API_URL}/wishlist`, { credentials: "include" }),
         ]);
         const cartData = await cartRes.json();
         const wishlistData = await wishlistRes.json();
@@ -99,7 +99,7 @@ export const EcommProvider = ({ children }) => {
     if (!requireLogin()) return;
      toast.success(" Product added to cart!");
     try {
-      const res = await fetch(`http://localhost:3001/cart/${productId}`, {
+      const res = await fetch(`${API_URL}/cart/${productId}`, {
         method: "PATCH",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -116,7 +116,7 @@ export const EcommProvider = ({ children }) => {
   const removeFromCart = async (productId) => {
     if (!requireLogin()) return;
     try {
-      const res = await fetch(`http://localhost:3001/cart/${productId}`, {
+      const res = await fetch(`${API_URL}/cart/${productId}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -137,7 +137,7 @@ export const EcommProvider = ({ children }) => {
       )
     );
     try {
-      const res = await fetch(`http://localhost:3001/cart/${productId}`, {
+      const res = await fetch(`${API_URL}/cart/${productId}`, {
         method: "PATCH",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -162,7 +162,7 @@ export const EcommProvider = ({ children }) => {
     toast.success(" Product added to wishlist!");
     setWishlist((prev) => [...prev, { product: { _id: productId } }]);
     try {
-      const res = await fetch(`http://localhost:3001/wishlist/${productId}`, {
+      const res = await fetch(`${API_URL}/wishlist/${productId}`, {
         method: "PATCH",
         credentials: "include",
       });
@@ -177,7 +177,7 @@ export const EcommProvider = ({ children }) => {
   const removeFromWishlist = async (productId) => {
     if (!requireLogin()) return;
     try {
-      const res = await fetch(`http://localhost:3001/wishlist/${productId}`, {
+      const res = await fetch(`${API_URL}/wishlist/${productId}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -193,7 +193,7 @@ export const EcommProvider = ({ children }) => {
   const handleCheckout = async () => {
     if (!requireLogin()) return;
     try {
-      await fetch("http://localhost:3001/orders", {
+      await fetch(`${API_URL}/orders`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

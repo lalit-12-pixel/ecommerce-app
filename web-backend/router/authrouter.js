@@ -17,13 +17,13 @@ authRouter.get(
 authRouter.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:5173/login",
+    failureRedirect: "https://www.inovative-hub.com/login",
     session: true, // required for passport to use session
   }),
   syncUserToSession, // sync user to session after successful login
   (req, res) => {
     // Now req.session.user is set
-    res.redirect("http://localhost:5173/home");
+    res.redirect("https://www.inovative-hub.com/home");
   }
 );
 // Logout
