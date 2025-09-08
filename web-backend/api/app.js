@@ -25,10 +25,14 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://www.innovative-hub.com",
+    origin: [
+      "https://ecommerce-app-innocative-hub.vercel.app",
+      "https://www.innovative-hub.com"
+    ],
     credentials: true,
   })
 );
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
