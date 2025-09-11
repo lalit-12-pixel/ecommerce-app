@@ -1,13 +1,11 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL ;
 export const EcommContext = createContext();
 
 export const EcommProvider = ({ children }) => {
   const navigate = useNavigate();
-
-  /* ---------- STATES ---------- */
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
   const [filteredCategory, setFilteredCategory] = useState("All");
