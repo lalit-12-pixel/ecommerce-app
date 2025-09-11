@@ -95,7 +95,7 @@ mongoose
   .then(() => {
     console.log("✅ Connected to MongoDB");
 
-    const PORT = process.env.PORT || 3001;
+    const PORT = process.env.PORT || 3000;
 
     if (process.env.NODE_ENV === "production") {
       // Load SSL certs from .env paths
