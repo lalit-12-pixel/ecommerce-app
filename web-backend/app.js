@@ -67,15 +67,18 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// ✅ Health check
+app.get("/ping", (req, res) => {
+  res.status(200).json({ message: "pong" });
+});
+
+
+
 // ✅ Routes
 app.use(authrouter);
 app.use(postRouter);
 app.use(addressRouter);
 
-// ✅ Health check
-app.get("/ping", (req, res) => {
-  res.status(200).json({ message: "pong" });
-});
 
 // ✅ Root check
 app.get("/", async (req, res) => {
