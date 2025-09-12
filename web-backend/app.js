@@ -23,12 +23,12 @@ const app = express();
 // ✅ Trust proxy (needed for secure cookies behind Nginx/Proxy)
 app.set("trust proxy", 1);
 
-// ✅ CORS setup (allow frontend origins)
+// ✅ CORS setup
 app.use(
   cors({
     origin: [
-      "http://localhost:5173", // Dev
-      "https://inovative-hub.com", // Production
+      "http://localhost:5173",
+      "https://inovative-hub.com",
       "https://www.inovative-hub.com",
     ],
     credentials: true,
@@ -47,6 +47,7 @@ const store = new MongoDBStore({
   collection: "sessions",
 });
 
+// ✅ Session config with dynamic secure cookie
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "defaultsecret",
@@ -56,7 +57,8 @@ app.use(
     cookie: {
       httpOnly: true,
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      secure: process.env.NODE_ENV === "production", // only true if behind HTTPS (Nginx provides it)
+      secure: process.env.NODE_ENV === "production" && process.env.USE_HTTPS === "true", 
+      // USE_HTTPS should be set to true in your production .env if behind HTTPS
     },
   })
 );
@@ -70,7 +72,7 @@ app.use(authrouter);
 app.use(postRouter);
 app.use(addressRouter);
 
-
+// ✅ Health check
 app.get("/ping", (req, res) => {
   res.status(200).json({ message: "pong" });
 });
@@ -92,14 +94,13 @@ app.get("/", async (req, res) => {
 // ✅ Error handler
 app.use(errorsController.pageNotFound);
 
-// ✅ MongoDB connection
+// ✅ MongoDB connection and start server
+const PORT = process.env.PORT || 3001;
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ Connected to MongoDB");
-
-    const PORT = process.env.PORT || 3001;
-
     app.listen(PORT, () => {
       console.log(`🚀 Server running at http://127.0.0.1:${PORT}`);
     });
