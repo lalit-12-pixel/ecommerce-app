@@ -5,8 +5,6 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const cors = require("cors");
 const mongoose = require("mongoose");
 const passport = require("passport");
-const fs = require("fs");
-const https = require("https");
 
 require("dotenv").config();
 require("./config/passport");
@@ -22,7 +20,7 @@ const addressRouter = require("./router/addressRouter");
 
 const app = express();
 
-// ✅ Trust proxy (for sessions + HTTPS behind Nginx/Proxy)
+// ✅ Trust proxy (needed for secure cookies behind Nginx/Proxy)
 app.set("trust proxy", 1);
 
 // ✅ CORS setup (allow frontend origins)
@@ -58,7 +56,7 @@ app.use(
     cookie: {
       httpOnly: true,
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production", // only true if behind HTTPS (Nginx provides it)
     },
   })
 );
@@ -95,23 +93,11 @@ mongoose
   .then(() => {
     console.log("✅ Connected to MongoDB");
 
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 3001;
 
-    if (process.env.NODE_ENV === "production") {
-      // Load SSL certs from .env paths
-      const privateKey = fs.readFileSync(process.env.SSL_KEY_PATH, "utf8");
-      const certificate = fs.readFileSync(process.env.SSL_CERT_PATH, "utf8");
-
-      const credentials = { key: privateKey, cert: certificate };
-
-      https.createServer(credentials, app).listen(PORT, () => {
-        console.log(`🚀 HTTPS server running at https://${process.env.DOMAIN}:${PORT}`);
-      });
-    } else {
-      app.listen(PORT, () => {
-        console.log(`🚀 Dev server running at http://localhost:${PORT}`);
-      });
-    }
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running at http://127.0.0.1:${PORT}`);
+    });
   })
   .catch((err) => {
     console.error("❌ MongoDB connection error:", err);
