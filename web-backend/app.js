@@ -70,6 +70,11 @@ app.use(authrouter);
 app.use(postRouter);
 app.use(addressRouter);
 
+
+app.get("/ping", (req, res) => {
+  res.status(200).json({ message: "pong" });
+});
+
 // ✅ Root check
 app.get("/", async (req, res) => {
   if (!req.session?.isLoggedIn || !req.session?.user) {
