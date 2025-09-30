@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-const API_URL = import.meta.env.VITE_API_URL ;
+const API_URL = import.meta.env.VITE_API_URL;
 export const EcommContext = createContext();
 
 export const EcommProvider = ({ children }) => {
@@ -30,7 +30,8 @@ export const EcommProvider = ({ children }) => {
     const fetchUser = async () => {
       try {
         const res = await fetch(`${API_URL}/`, {
-          credentials: "include",
+          method: "GET",
+          credentials: "include", 
         });
         if (!res.ok) throw new Error("Not logged in");
         const data = await res.json();
@@ -95,7 +96,7 @@ export const EcommProvider = ({ children }) => {
   /* ---------- CART ACTIONS ---------- */
   const addToCart = async (productId, quantity = 1) => {
     if (!requireLogin()) return;
-     toast.success(" Product added to cart!");
+    toast.success(" Product added to cart!");
     try {
       const res = await fetch(`${API_URL}/cart/${productId}`, {
         method: "PATCH",
@@ -246,7 +247,7 @@ export const EcommProvider = ({ children }) => {
         p.category.toLowerCase().includes(lowerQuery)
     );
     setFilteredProducts(results);
-  }
+  };
 
   return (
     <EcommContext.Provider

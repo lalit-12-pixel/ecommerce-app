@@ -1,6 +1,7 @@
 import { useState } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
-// ✨ Define the category options in an array
+
 const categories = [
   "Electronics Components",
   "Microcontroller Board",
@@ -23,7 +24,7 @@ export default function AddProduct() {
     mrp: "",
     price: "",
     stock: "",
-    category: "", // Keep initial value as empty string for the placeholder
+    category: "", 
     image: "",
   });
 
@@ -35,7 +36,7 @@ export default function AddProduct() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3001/add-products", {
+      const res = await fetch(`${API_URL}/add-products`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -109,7 +110,7 @@ export default function AddProduct() {
           className="border p-2 w-full"
         />
 
-        {/* ✨ Replaced the text input with a select dropdown */}
+     
         <select
           name="category"
           value={formData.category}

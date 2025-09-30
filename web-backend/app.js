@@ -53,15 +53,15 @@ app.use(
     secret: process.env.SESSION_SECRET || "defaultsecret",
     resave: false,
     saveUninitialized: false,
-    store: store,
+    store,
     cookie: {
       httpOnly: true,
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      secure: process.env.NODE_ENV === "production" && process.env.USE_HTTPS === "true", 
-      // USE_HTTPS should be set to true in your production .env if behind HTTPS
+      secure: process.env.NODE_ENV === "production", // ✅ only secure in prod
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // ✅ required if frontend is on a different domain
     },
   })
 );
+
 
 // ✅ Passport
 app.use(passport.initialize());
@@ -98,14 +98,14 @@ app.get("/", async (req, res) => {
 app.use(errorsController.pageNotFound);
 
 // ✅ MongoDB connection and start server
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ Connected to MongoDB");
     app.listen(PORT, () => {
-      console.log(`🚀 Server running at http://127.0.0.1:${PORT}`);
+      console.log(`🚀 Server running at http://localhost:${PORT}`);
     });
   })
   .catch((err) => {
