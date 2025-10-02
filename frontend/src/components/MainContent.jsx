@@ -22,15 +22,22 @@ const MainContent = () => {
       style={{ userSelect: "none" }}
     >
       <section className="mb-12">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 " style={{alignItems: 'center'}}>
+        <div
+          className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 "
+          style={{ alignItems: "center" }}
+        >
           <h3
             className="text-3xl font-bold tracking-tight text-gray-800 whitespace-nowrap"
-            style={{ userSelect: "none" ,marginRight: '10px',marginTop: '-10px'}}
+            style={{
+              userSelect: "none",
+              marginRight: "10px",
+              marginTop: "-10px",
+            }}
           >
             Our Products
           </h3>
 
-          <div className="flex overflow-x-auto space-x-3 pb-2 no-scrollbar">
+          <div className="flex w-full overflow-x-auto space-x-3 pb-2 no-scrollbar touch-pan-x">
             {categories.map((category) => (
               <button
                 key={category}

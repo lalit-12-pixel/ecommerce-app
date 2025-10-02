@@ -9,6 +9,7 @@ import LandingPage from "./components/LandingPage";
 import Ecomm from "./E-comm";
 import LoginPage from "./components/LoginPage";
 import SignInPage from "./components/SignInPage";
+import Checkout from "./components/Checkout";
 import AccountPage from "./components/AccountPage";
 import AddProduct from "./components/addproduct";
 import ComingSoonPage from "./components/ComingSoonPage";
@@ -85,6 +86,10 @@ export const routes = [
   {
     path: "coming-soon",
     element: <ComingSoonPage />,
+  },
+   {
+    path: "check-out",
+    element: <Checkout />,
   },
 ];
 

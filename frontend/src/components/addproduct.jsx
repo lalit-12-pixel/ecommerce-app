@@ -15,6 +15,9 @@ const categories = [
   "Mic and Speaker",
   "Motor and Motor Driver",
   "Relay",
+  "Drone parts & components",
+  "miscellaneous",
+  "equipments",
 ];
 
 export default function AddProduct() {

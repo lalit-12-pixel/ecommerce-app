@@ -17,7 +17,11 @@ const categories = [
     { name: "Power Supply", key: "Power Supply" },
     { name: "Mic and Speaker", key: "Mic and Speaker" },
     { name: "Motor and Motor Driver", key: "Motor and Motor Driver" },
-    { name: "Relay", key: "Relay" }
+    { name: "Relay", key: "Relay" },
+    { name: "Drone parts & components", key: "Drone parts & components" },
+    { name: "Miscellaneous", key: "Miscellaneous" },
+    { name: "Equipments", key: "Equipments" },
+
 ];
 
 const CategorySidebar = ({ isOpen, onClose, onSelectCategory, filteredCategory }) => {

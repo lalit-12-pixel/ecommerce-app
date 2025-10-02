@@ -5,6 +5,7 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const cors = require("cors");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const paymentRoutes = require('./router/payment');
 
 require("dotenv").config();
 require("./config/passport");
@@ -93,6 +94,9 @@ app.get("/", async (req, res) => {
     return res.status(500).json({ error: "Server error" });
   }
 });
+
+
+// app.use("/api/payment", paymentRoutes);
 
 // ✅ Error handler
 app.use(errorsController.pageNotFound);
