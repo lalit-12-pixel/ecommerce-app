@@ -21,10 +21,9 @@ const Header = () => {
     isSearchOpen,
     cartCount,
     wishlistCount,
-      cartSubtotal,
+    cartSubtotal,
     setIsSidebarOpen,
     setIsCartOpen,
-    setIsWishlistOpen,
     setIsSearchOpen,
     setIsScrolled,
     setSearchQuery
@@ -59,17 +58,17 @@ const Header = () => {
           <FontAwesomeIcon icon={faBars} className="text-2xl" />
         </button>
 
-        <span onClick={() => navigate("/")} className="font-bold text-xl">
+        <span onClick={() => navigate("/")} className="font-bold text-xl  text-indigo-600">
           Innovative Hub
         </span>
 
         <div className="flex items-center space-x-4">
           <button onClick={() => setIsSearchOpen(!isSearchOpen)}>
-            <FontAwesomeIcon icon={faSearch} className="text-2xl" />
+            <FontAwesomeIcon icon={faSearch} className="text-xl" />
           </button>
 
           <button
-            onClick={() => setIsWishlistOpen(true)}
+            onClick={() => navigate(user ? "/home/my-wishlist" : "/login")}
             className="relative text-gray-600 hover:text-red-500"
           >
             <FontAwesomeIcon icon={faHeart} className="text-2xl" />
@@ -81,7 +80,7 @@ const Header = () => {
           </button>
 
           <button
-            onClick={() => setIsCartOpen(true)}
+            onClick={() => user?setIsCartOpen(true):navigate("/login")}
             className="relative text-gray-600 hover:text-indigo-600"
           >
             <FontAwesomeIcon icon={faShoppingCart} className="text-2xl" />

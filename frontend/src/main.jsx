@@ -65,6 +65,10 @@ export const routes = [
         path: "my-addresses",
         element: <AddressBook />,
       },
+      {
+        path: "check-out",
+        element: <Checkout />,
+      },
     ],
   },
   {
@@ -79,17 +83,13 @@ export const routes = [
     path: "faq",
     element: <FAQPage />,
   },
-   {
+  {
     path: "contact",
     element: <ContactUsPage />,
   },
   {
     path: "coming-soon",
     element: <ComingSoonPage />,
-  },
-   {
-    path: "check-out",
-    element: <Checkout />,
   },
 ];
 

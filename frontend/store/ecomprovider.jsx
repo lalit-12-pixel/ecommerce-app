@@ -191,17 +191,8 @@ export const EcommProvider = ({ children }) => {
   /* ---------- CHECKOUT ---------- */
   const handleCheckout = async () => {
     if (!requireLogin()) return;
-    try {
-      await fetch(`${API_URL}/orders`, {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cart }),
-      });
-      setCart([]);
-    } catch (err) {
-      console.error(err);
-    }
+    navigate("/home/check-out");
+    setIsCartOpen(false);
   };
 
   /* ---------- CART & WISHLIST COUNT/SUM ---------- */

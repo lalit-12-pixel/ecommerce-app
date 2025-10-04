@@ -100,6 +100,7 @@ const AppContent = () => {
             onClose={() => setIsSidebarOpen(false)}
             onSelectCategory={handleCategorySelect}
             filteredCategory={filteredCategory}
+            
           />
 
           <Cart
