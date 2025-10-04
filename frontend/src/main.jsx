@@ -1,7 +1,7 @@
 // Styles
 import "tailwindcss/tailwind.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "./App.css";
 import { createRoot } from "react-dom/client";
 import React, { Children } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";

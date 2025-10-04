@@ -13,6 +13,7 @@ import BackToTopButton from "./components/BackToTopButton.jsx";
 import ProductViewPage from "./components/ProductViewPage.jsx";
 import Loader from "./components/loader.jsx";
 
+
 function App() {
   return (
     <EcommProvider>
